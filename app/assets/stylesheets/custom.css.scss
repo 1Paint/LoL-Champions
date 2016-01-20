@@ -3,7 +3,8 @@
 
 /* mixins, variables, etc. */
 
-$gray-medium-light: #eaeaea;
+$gray-medium-light: #EAEAEA;
+$gray-medium: #A9A9A9;
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -13,10 +14,6 @@ $gray-medium-light: #eaeaea;
 
 /* universal */
 
-body {
-  padding-top: 80px;
-}
-
 .center {
   text-align: center;
   h1 {
@@ -25,6 +22,10 @@ body {
 }
 
 /* header */
+
+#nav {
+  top: 0;
+}
 
 #logo {
   float: left;
@@ -68,5 +69,101 @@ footer {
   }
 }
 
-/* homepage */
+/*** homepage ***/
 
+/*** champion page ***/
+
+.champ-img {
+  width: 100%;
+  height: 100%;
+}
+
+.lore {
+  padding-top: 10px;
+}
+
+/* spells & passive */
+
+// spell img, name, cooldown, cost, range
+div.spell-top, div.passive-top {
+  overflow: hidden;
+}
+
+// spell description
+div.spell-bottom, div.passive-bottom {
+  padding-top: 20px;
+  margin-top: 0px;
+  border-top: 3px solid $gray-medium;
+}
+
+// spell cooldown (and name)
+div.spell-dynamics {
+  float: left;
+}
+
+// spell cost and range
+div.spell-statics {
+  float: right;
+  p.range {
+    float: right;
+  }
+}
+
+div.spell-img, div.passive-img {
+  float: left;
+  margin-right: 15px;
+}
+
+img.spell-img, img.passive-img {
+  border: 3px solid $gray-dark;
+}
+
+h2.spell-name, h2.passive-name {
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+p.cooldown, p.cost, p.range, p.invisible {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-right: 0px;
+  p.invisible {
+    visibility: hidden;
+  }
+}
+
+.colorF88017 {
+  color: #F88017;
+}
+
+@media (max-width: 768px) {
+  div.spell-img, div.passive-img {
+    float: none;
+    margin-right: 0px;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+  div.spell-dynamics {
+    float: none;
+    h2.spell-name, h2.passive-name {
+      text-align: center;
+      padding-bottom: 15px;
+    }
+  }
+  div.spell-statics {
+    float: left;
+    p.range {
+      float: left;
+    }
+  }
+}
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1170px;
+  .jumbotron {
+    border-radius: 10px;
+  }
+}

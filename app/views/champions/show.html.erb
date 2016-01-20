@@ -2,32 +2,39 @@
   <div class="row">
     <div class="col-md-4">
       <h1><%= @champion.name %></h1>
-      <img src=<%= @champ_image_url %> width="75%" height="75%" alt=<%= @champion.name %> />
+      <h3><%= @champion.title %></h3>
+      <img class="champ-img" src=<%= @champion.champ_img_url %> alt=<%= @champion.name %> />
+    </div>
+    <div class="col-md-8">
+      <p class="lore"><%= @champion.lore.html_safe %></p>
     </div>
   </div>
 </div>
 
-<div class="jumbotron">
-  <h2><%= @passive %></h2>
-  <p><%= @passive_description %></p>
+<div class="jumbotron passive">
+  <div class="passive-top">
+    <div class="passive-img">
+      <img class="passive-img" src=<%= @champion.passive_img_url %> alt=<%= @champion.passive %> />
+    </div>
+    <div class="passive-dynamics">
+      <h2 class="passive-name"><%= @champion.passive %></h2>
+      <p class="invisible">.</p>
+    </div>
+  </div>
+  
+  <div class="passive-bottom">
+    <p><%= @champion.passive_description.html_safe %></p>
+  </div>
 </div>
 
-<div class="jumbotron">
-  <h2><%= @Q_name %></h2>
-  <p><%= @Q_descripion %></p>
-</div>
+<% @spell_key = "q" %>
+<%= render 'spell' %>
 
-<div class="jumbotron">
-  <h2><%= @W_name %></h2>
-  <p><%= @W_descripion %></p>
-</div>
+<% @spell_key = "w" %>
+<%= render 'spell' %>
 
-<div class="jumbotron">
-  <h2><%= @E_name %></h2>
-  <p><%= @E_descripion %></p>
-</div>
+<% @spell_key = "e" %>
+<%= render 'spell' %>
 
-<div class="jumbotron">
-  <h2><%= @R_name %></h2>
-  <p><%= @R_descripion %></p>
-</div>
+<% @spell_key = "r" %>
+<%= render 'spell' %>
