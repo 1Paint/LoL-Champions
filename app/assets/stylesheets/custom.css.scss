@@ -1,10 +1,16 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-/* mixins, variables, etc. */
+/*******************************************************/
+/************** mixins, variables, etc. ****************/
+/*******************************************************/
 
 $gray-medium-light: #EAEAEA;
 $gray-medium: #A9A9A9;
+$red: #d9534f;
+$green: #5cb85c;
+$blue: #337ab7;
+$purple: #6f5499;
 
 @mixin box_sizing {
   -moz-box-sizing: border-box;
@@ -12,7 +18,14 @@ $gray-medium: #A9A9A9;
   box-sizing: border-box;
 }
 
-/* universal */
+// Aatrox bonus attack damage.
+.colorF88017 {
+  color: #F88017;
+}
+
+/*******************************************************/
+/********************** universal **********************/
+/*******************************************************/
 
 .center {
   text-align: center;
@@ -21,7 +34,42 @@ $gray-medium: #A9A9A9;
   }
 }
 
-/* header */
+div.jumbotron {
+ padding-top: 35px;
+ padding-bottom: 30px;
+ p {
+   margin-bottom: 0px;
+ }
+}
+
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 1170px;
+  .jumbotron {
+    border-radius: 10px;
+  }
+}
+
+td {
+  white-space: nowrap;
+}
+
+p.invisible {
+  visibility: hidden;
+}
+
+div.progress {
+  margin: 0px;
+  margin-left: 10px;
+  background-color: #FFFFFF;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/*******************************************************/
+/*********************** header ************************/
+/*******************************************************/
 
 #nav {
   top: 0;
@@ -42,7 +90,9 @@ $gray-medium: #A9A9A9;
   }
 }
 
-/* footer */
+/*******************************************************/
+/*********************** footer ************************/
+/*******************************************************/
 
 footer {
   float: bottom;
@@ -69,20 +119,82 @@ footer {
   }
 }
 
-/*** homepage ***/
+/*******************************************************/
+/********************** homepage ***********************/
+/*******************************************************/
 
-/*** champion page ***/
 
-.champ-img {
-  width: 100%;
-  height: 100%;
+
+
+
+
+
+
+/*******************************************************/
+/******************** champion page ********************/
+/*******************************************************/
+
+//----------------------------------//
+//            name & stats          //
+//----------------------------------//
+
+div.champ-img {
+  float: left;
+  margin-right: 30px;
+  img.champ-img {
+    border-radius: 10px;
+    max-width: 100%;
+  }
 }
 
-.lore {
-  padding-top: 10px;
+div.champ-info {
+  padding: 10px;
+  overflow: hidden;
+}
+div.champ-title {
+  padding-bottom: 0px;
+  border-bottom: 3px solid $gray-medium;
+  margin-bottom: 30px;
+  overflow: hidden;
+  h1.champ-name, h3.champ-title {
+    display: inline-block;
+    margin: 0px;
+  }
+  h3.champ-title {
+    margin-left: 5px;
+  }
 }
 
-/* spells & passive */
+div.stats_summary {
+  overflow: hidden;
+  table {
+    width: 100%;
+  }
+  .progress-bar.attack {
+    background-color: $red
+  }
+  .progress-bar.defense {
+    background-color: $green
+  }
+  .progress-bar.magic {
+    background-color: $blue
+  }
+  .progress-bar.difficulty {
+    background-color: $purple
+  }
+}
+div.stats {
+  overflow: hidden;
+  margin-top: 15px;
+  text-align: center;
+  table {
+    width: 100%;
+  }
+}
+
+//----------------------------------//
+//          spells & passive        //
+//----------------------------------//
 
 // spell img, name, cooldown, cost, range
 div.spell-top, div.passive-top {
@@ -92,8 +204,10 @@ div.spell-top, div.passive-top {
 // spell description
 div.spell-bottom, div.passive-bottom {
   padding-top: 20px;
-  margin-top: 0px;
+  margin-top: -3px;
   border-top: 3px solid $gray-medium;
+  margin-left: 7px;
+  margin-right: 7px;
 }
 
 // spell cooldown (and name)
@@ -104,7 +218,12 @@ div.spell-dynamics {
 // spell cost and range
 div.spell-statics {
   float: right;
-  p.range {
+  padding-right: 7px;
+  p.cost {
+    float: right;
+    clear: both;
+  }
+  p.cooldown {
     float: right;
   }
 }
@@ -112,10 +231,10 @@ div.spell-statics {
 div.spell-img, div.passive-img {
   float: left;
   margin-right: 15px;
-}
-
-img.spell-img, img.passive-img {
-  border: 3px solid $gray-dark;
+  img {
+    border-radius: 10px;
+    border: 3px solid $gray-dark;
+  }
 }
 
 h2.spell-name, h2.passive-name {
@@ -128,42 +247,107 @@ p.cooldown, p.cost, p.range, p.invisible {
   margin-top: 0px;
   margin-bottom: 0px;
   margin-right: 0px;
-  p.invisible {
-    visibility: hidden;
+}
+
+//----------------------------------//
+//               Lore               //
+//----------------------------------//
+
+div.lore {
+  h2 {
+    border-bottom: 3px solid $gray-medium;
+    margin-top: 0px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
   }
 }
 
-.colorF88017 {
-  color: #F88017;
-}
+/*******************************************************/
+/******************** mobile changes *******************/
+/*******************************************************/
 
 @media (max-width: 768px) {
+  div.champ-title {
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    h1.champ-name,  h3.champ-title {
+      display: block;
+      float: none;
+      text-align: center;
+      margin: 0px;
+    }
+  }
+  
+  div.champ-details {
+    div.champ-img {
+      float: none;
+      text-align: center;
+      margin: 0px;
+      margin-bottom: 20px;
+    }
+  }
+  
+  div.stats_summary {
+    table {
+      width: 100%;
+    }
+  }
+  
+  div.stats {
+    overflow: hidden;
+    margin-top: 15px;
+    text-align: center;
+    table {
+    }
+    p.stat-label {
+      font-size: 17px;
+    }
+    p.stat-numbers {
+      font-size: 17px;
+    }
+  }
+  
   div.spell-img, div.passive-img {
     float: none;
     margin-right: 0px;
     text-align: center;
     padding-bottom: 20px;
   }
-  div.spell-dynamics {
+
+  div.spell-dynamics, div.passive-dynamics {
     float: none;
     h2.spell-name, h2.passive-name {
       text-align: center;
-      padding-bottom: 15px;
+      padding-bottom: 10px;
+    }
+    p.invisible {
+      display: none;
     }
   }
+
   div.spell-statics {
     float: left;
-    p.range {
+    padding-right: 0px;
+    p.cost {
+      float: left;
+      clear: both;
+    }
+    p.cooldown {
       float: left;
     }
   }
-}
 
-.container-fluid {
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 1170px;
-  .jumbotron {
-    border-radius: 10px;
+  div.spell-bottom, div.passive-bottom {
+    padding-top: 20px;
+    margin-top: 5px;
+    border-top: 3px solid $gray-medium;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
+
+  div.lore {
+    h2 {
+      text-align: center;
+    }
   }
 }

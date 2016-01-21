@@ -14,12 +14,13 @@
 ActiveRecord::Schema.define(version: 20160119005908) do
 
   create_table "champions", force: :cascade do |t|
+    t.string   "champ_name_id"
+    t.string   "champ_key"
     t.string   "name"
-    t.string   "champ_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
-  add_index "champions", ["name"], name: "index_champions_on_name"
+  add_index "champions", ["champ_name_id"], name: "index_champions_on_champ_name_id"
 
 end

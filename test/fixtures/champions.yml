@@ -1,9 +1,9 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  id: MyString
+khazix:
+  name: Kha'Zix
+  id: 1
 
-two:
-  name: MyString
-  id: MyString
+thresh:
+  name: Thresh
+  id: 2

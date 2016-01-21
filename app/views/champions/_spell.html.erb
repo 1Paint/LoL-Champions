@@ -1,16 +1,16 @@
 <div class="jumbotron spell">
   <div class="spell-top">
     <div class="spell-img">
-      <img class="spell-img" src=<%= @champion.spell_img_url[:"#{@spell_key}"] %> alt=<%= @champion.spell_name[:"#{@spell_key}"] %> />
+      <img src=<%= @champion.spell_img_url[:"#{@spell_key}"] %> />
     </div>
     <div class="spell-dynamics">
       <h2 class="spell-name"><%= @champion.spell_name[:"#{@spell_key}"] %></h2>
-      <p class="cooldown">Cooldown: <%= @champion.spell_cooldown[:"#{@spell_key}"] %> seconds</p>
+      <p class="range">Range: <%= @champion.spell_range[:"#{@spell_key}"] %></p>
     </div>
     
     <div class="spell-statics">
+      <p class="cooldown">Cooldown: <%= @champion.spell_cooldown[:"#{@spell_key}"] %> seconds</p>
       <p class="cost">Cost: <%= @champion.spell_cost[:"#{@spell_key}"] %></p>
-      <p class="range">Range: <%= @champion.spell_range[:"#{@spell_key}"] %></p>
     </div>
   </div>
   <div class="spell-bottom">
