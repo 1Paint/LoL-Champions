@@ -11,8 +11,8 @@
       </div>
       
       <!-- Attack, Defense, Magic, Difficulty ratings out of 10 -->
-      <div class="stats_summary">
-        <table class="champ-stats-summary">
+      <div class="stats-summary">
+        <table class="stats-summary">
           <% @champion.stat_summary.each do |stat, value| %>
             <% @stat_key = stat %>
             <% @value = value %>
@@ -23,20 +23,13 @@
       
       <!-- Champion stat ranges from levels 1 to 18 -->
       <div class="stats">
-        <table class="champ-stats">
+        <table class="stats">
           <% @champion.stat_range.each do |stat, details| %>
-          
             <!-- stat_keys: hp, mp, armor, spellblock, hpregen, mpregen, attackdamage, attackspeed -->
             <% @stat_key = stat.to_s %>
             <% @stat_name = details[:name] %>
-            
-            <% if stat == :attackspeed %>
-              <% @stat_lv1 = details[:min].round(3) %>
-              <% @stat_lv18 = details[:max].round(3) %>
-            <% else %>
-              <% @stat_lv1 = details[:min].round(1) %>
-              <% @stat_lv18 = details[:max].round(1) %>
-            <% end %>
+            <% @stat_lv1 = details[:min] %>
+            <% @stat_lv18 = details[:max] %>
             
             <%= render 'stats' %>
           <% end %>

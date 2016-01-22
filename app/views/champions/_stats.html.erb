@@ -1,6 +1,40 @@
-<tr class=<%= @stat_key %>><!-- stat_keys: hp, mp, armor, spellblock, hpregen, mpregen, attackdamage, attackspeed -->
+<!-- Dividers -->
+<% if @stat_key == "movespeed" || @stat_key == "attackdamage" %>
+  <tr class="h-line">
+    <td colspan="4"><p class="invisible">.</p></td>
+  </tr>
+<% end %>
+
+<tr class="stats <%= @stat_key %>"> <!-- stat_keys: hp, hpregen, mp, mpregen, armor, spellblock, movespeed, attackdamage, attackspeed, attackrange -->
+  <!-- Stat Label -->
+  <td class="stat-label <%= @stat_key %>">
+    <p class="stat-label <%= @stat_key %>"><%= @stat_name %>:&nbsp;</p>
+  </td>
+  
+  <!-- Stats -->
   <td>
-    <p class="stat-label"><%= @stat_name %></p>
-    <p class="stat-numbers"><%= @stat_lv1 %>&mdash;<%= @stat_lv18 %></p>
+    <!-- Single number (for range, movespeed, & non-scaling values -->
+    <% if @stat_lv1 == @stat_lv18 %>
+      <td class="stat-number-min">
+        <p class="invisible">.</p>
+      </td>
+      <td class="stat-number <%= @stat_key %>">
+        <p class="stat-number <%= @stat_key %>"><%= @stat_lv1.round(0) %></p>
+      </td>
+      <td class="stat-number-max">
+        <p class="invisible">.</p>
+      </td>
+    <!-- Lv1 stat and Lv 18 stat -->
+    <% else %>
+      <td class="stat-number-min">
+        <p class="stat-number-min <%= @stat_key %>"><%= @stat_lv1 %></p>
+      </td>
+      <td class="stat-number">
+        <p>&ndash;</p>
+      </td>
+      <td class="stat-number-max">
+        <p class="stat-number-max <%= @stat_key %>"><%= @stat_lv18 %></p>
+      </td>
+    <% end %>
   </td>
 </tr>

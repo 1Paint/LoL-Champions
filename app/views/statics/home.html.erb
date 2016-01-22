@@ -1,7 +1,20 @@
-<div class="center jumbotron">
-  <h1>Testing</h1>
-</div>
-
-<div class="center jumbotron champions-list">
-  <h1>Testing</h1>
+<div class="champions-grid">
+  <% @champion_list.each do |champ_name_id, champ_name| %>
+    <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_id}.png" %>
+    
+    <!----------------------------------------------------------------------->
+    <!-- Bug-fix for 6.1.1 Wukong square icon (shows a giant teal square) -->
+    <!----------------------------------------------------------------------->
+    <% if champ_name == "Wukong" %>
+      <!-- Using version 5.24.2 (right before 6.1.1 -->
+      <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/5.24.2/img/champion/#{champ_name_id}.png" %>
+    <% end %>
+    
+    <div class="champ-img-square">
+      <a href=<%= "/champions/#{champ_name_id}" %>>
+        <img src="<%= champ_img_url %>">
+        <p><%= champ_name %></p>
+      </a>
+    </div>
+  <% end %>
 </div>

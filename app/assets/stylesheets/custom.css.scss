@@ -1,10 +1,8 @@
-@import "bootstrap-sprockets";
-@import "bootstrap";
-
 /*******************************************************/
 /************** mixins, variables, etc. ****************/
 /*******************************************************/
 
+$gray-dark: #333;
 $gray-medium-light: #EAEAEA;
 $gray-medium: #A9A9A9;
 $red: #d9534f;
@@ -48,6 +46,9 @@ div.jumbotron {
   max-width: 1170px;
   .jumbotron {
     border-radius: 10px;
+    padding-top: 35px;
+    padding-left: 30px;
+    padding-right: 30px;
   }
 }
 
@@ -61,12 +62,10 @@ p.invisible {
 
 div.progress {
   margin: 0px;
-  margin-left: 10px;
-  background-color: #FFFFFF;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-
+  
 /*******************************************************/
 /*********************** header ************************/
 /*******************************************************/
@@ -84,9 +83,9 @@ div.progress {
   padding-left: 9px;
   padding-top: 9px;
   font-weight: bold;
+  text-decoration: none;
   &:hover {
     color: white;
-    text-decoration: none;
   }
 }
 
@@ -95,15 +94,14 @@ div.progress {
 /*******************************************************/
 
 footer {
+  padding-top: 100px;
+  clear: both;
   float: bottom;
-  margin-top: 300px;
-  padding-top: 5px;
-  border-top: 1px solid $gray-medium-light;
-  color: $gray-light;
+  overflow: hidden;
   a {
-    color: $gray;
+    color: $red;
     &:hover {
-      color: $gray-darker;
+      color: white;
     }
   }
   small {
@@ -123,12 +121,34 @@ footer {
 /********************** homepage ***********************/
 /*******************************************************/
 
+div.champions-grid {
+  text-align: center;
+}
 
-
-
-
-
-
+div.champ-img-square {
+  display: inline-block;
+  overflow: hidden;
+  padding: 10px;
+  padding-bottom: 5px;
+  margin: 10px;
+  border-radius: 1001;
+  text-align: center;
+  background-color: $gray-medium-light;
+  &:hover {
+    background-color: $gray-medium;
+  }
+  img {
+    border-radius: 10px;
+  }
+  p {
+    font-size: 18px;
+    margin: 0px;
+    color: $gray-dark;
+  }
+  a {
+    text-decoration: none;
+  }
+}
 
 /*******************************************************/
 /******************** champion page ********************/
@@ -148,9 +168,10 @@ div.champ-img {
 }
 
 div.champ-info {
-  padding: 10px;
+  padding: 0px;
   overflow: hidden;
 }
+
 div.champ-title {
   padding-bottom: 0px;
   border-bottom: 3px solid $gray-medium;
@@ -165,30 +186,62 @@ div.champ-title {
   }
 }
 
-div.stats_summary {
+div.stats-summary {
   overflow: hidden;
   table {
     width: 100%;
+  }
+  div.progress {
+    margin-left: 10px;
+    background-color: white;
   }
   .progress-bar.attack {
-    background-color: $red
+    background-color: $red;
   }
   .progress-bar.defense {
-    background-color: $green
+    background-color: $green;
   }
   .progress-bar.magic {
-    background-color: $blue
+    background-color: $blue;
   }
   .progress-bar.difficulty {
-    background-color: $purple
+    background-color: $purple;
   }
 }
+
 div.stats {
   overflow: hidden;
-  margin-top: 15px;
-  text-align: center;
-  table {
-    width: 100%;
+  padding-left: 15px;
+}
+
+table.stats {
+  padding: 0px;
+  margin-top: 40px;
+  td {
+    width: 1;
+  }
+  td.stat-label {
+    text-align: right;
+  }
+  td.stat-number {
+    text-align: center;
+  }
+  td.stat-number-min {
+    text-align: right;
+    padding-left: 5px;
+  }
+  td.stat-number-max {
+    text-align: left;
+  }
+  p {
+    font-size: 19px;
+    line-height: 1.3;
+  }
+  tr.h-line {
+    line-height: 1px;
+    p {
+      padding-bottom: 5px;
+    }
   }
 }
 
@@ -267,6 +320,14 @@ div.lore {
 /*******************************************************/
 
 @media (max-width: 768px) {
+  
+  /* Homepage */
+  div.champ-img-square {
+    img {
+    }
+  }
+  
+  /* Champion Page */
   div.champ-title {
     padding-bottom: 5px;
     margin-bottom: 20px;
@@ -294,16 +355,21 @@ div.lore {
   }
   
   div.stats {
-    overflow: hidden;
+    padding: 0px;
+  }
+  
+  table.stats {
     margin-top: 15px;
-    text-align: center;
-    table {
-    }
-    p.stat-label {
+    width: 100%;
+    p {
       font-size: 17px;
+      line-height: 1.2;
     }
-    p.stat-numbers {
-      font-size: 17px;
+    tr.h-line {
+      line-height: 1px;
+      p {
+        padding-bottom: 0px;
+      }
     }
   }
   
