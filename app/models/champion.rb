@@ -366,11 +366,17 @@ class Champion < ActiveRecord::Base
       @buttons.each do |button, num|
         get_spell(button, num)
         
+        # Spell resource.
+        resource = @data['data'][@champ_name_id]['spells'][num]['resource']
+        @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
+        
         # Empty values showing up as ().
         num_empty_data = @spell_description[button].scan("(**Missing/Misplaced API Data**)").count
+        num_empty_data += @spell_cost[button].scan("(**Missing/Misplaced API Data**)").count
         
         # Missing values showing up as (+)
         num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
+        num_missing_data += @spell_cost[button].scan("**Missing/Misplaced API Data**").count
         
         # Find number of empy data for each champion.
         if num_empty_data != 0
@@ -378,8 +384,6 @@ class Champion < ActiveRecord::Base
           
           # Taking care of redundancy.
           num_missing_data -= 1
-          
-          # Find number of missing data for each champion.
           if num_missing_data != 0
             @missing_data[@champ_name].concat(["#{button.upcase} is missing #{num_missing_data} set(s) of values"])
           end
