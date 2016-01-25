@@ -1,19 +1,19 @@
 <div class="jumbotron spell">
   <div class="spell-top">
     <div class="spell-img">
-      <img src=<%= @champion.spell_img_url[:"#{@spell_key}"] %> />
+      <img src=<%= @champion.spell_img_url[@spell_button.to_sym] %> />
     </div>
     <div class="spell-dynamics">
-      <h2 class="spell-name"><%= @champion.spell_name[:"#{@spell_key}"] %></h2>
-      <p class="range">Range: <%= @champion.spell_range[:"#{@spell_key}"] %></p>
+      <h2 class="spell-name"><%= @champion.spell_name[@spell_button.to_sym] %></h2>
+      <p class="range">Range: <%= @champion.spell_range[@spell_button.to_sym] %></p>
     </div>
     
     <div class="spell-statics">
-      <p class="cooldown">Cooldown: <%= @champion.spell_cooldown[:"#{@spell_key}"] %> seconds</p>
-      <p class="cost">Cost: <%= @champion.spell_cost[:"#{@spell_key}"] %></p>
+      <p class="cooldown">Cooldown: <%= @champion.spell_cooldown[@spell_button.to_sym] %> seconds</p>
+      <p class="cost">Cost: <%= @champion.spell_cost[@spell_button.to_sym] %></p>
     </div>
   </div>
   <div class="spell-bottom">
-    <p><%= @champion.spell_descripion[:"#{@spell_key}"].html_safe %></p>
+    <p><%= @champion.spell_description[@spell_button.to_sym].html_safe %></p>
   </div>
 </div>

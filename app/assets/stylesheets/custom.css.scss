@@ -69,6 +69,11 @@ div.progress {
 /*******************************************************/
 /*********************** header ************************/
 /*******************************************************/
+li.version {
+  font-size: 12px;
+  overflow: hidden;
+  color: white;
+}
 
 #nav {
   top: 0;
@@ -85,7 +90,7 @@ div.progress {
   font-weight: bold;
   text-decoration: none;
   &:hover {
-    color: white;
+    color: #E5E4E2;
   }
 }
 
@@ -131,7 +136,7 @@ div.champ-img-square {
   padding: 10px;
   padding-bottom: 5px;
   margin: 10px;
-  border-radius: 1001;
+  border-radius: 10px;
   text-align: center;
   background-color: $gray-medium-light;
   &:hover {

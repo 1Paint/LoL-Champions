@@ -2,16 +2,17 @@
 
 <%= render 'passive' %>
 
-<% @spell_key = "q" %>
+<!-- @spell_buttons must be :q, :w, :e, or :r -->
+<% @spell_button = "q" %>
 <%= render 'spell' %>
 
-<% @spell_key = "w" %>
+<% @spell_button = "w" %>
 <%= render 'spell' %>
 
-<% @spell_key = "e" %>
+<% @spell_button = "e" %>
 <%= render 'spell' %>
 
-<% @spell_key = "r" %>
+<% @spell_button = "r" %>
 <%= render 'spell' %>
 
 <%= render 'lore' %>
