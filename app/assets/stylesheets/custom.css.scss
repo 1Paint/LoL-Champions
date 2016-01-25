@@ -3,6 +3,7 @@
 /*******************************************************/
 
 $gray-dark: #333;
+$gray-medium-dark: #585858;
 $gray-medium-light: #EAEAEA;
 $gray-medium: #A9A9A9;
 $red: #d9534f;
@@ -16,14 +17,153 @@ $purple: #6f5499;
   box-sizing: border-box;
 }
 
-// Aatrox bonus attack damage.
+//----------------------------------//
+//          colors from API         //
+//----------------------------------//
+
 .colorF88017 {
   color: #F88017;
+}
+.colorFF9900 {
+  color: #FF9900;
+}
+.colorCC3300 {
+  color: #CC3300;
+}
+.color99FF99 {
+  color: #99FF99;
+}
+.colorFF8C00 {
+  color: #FF8C00;
+}
+.colorFFFFFF {
+  color: #FFFFFF;
+}
+.colorEED6AF {
+  color: #EED6AF;
+}
+.colorFF3300 {
+  color: #FF3300;
+}
+.colorFFF673 {
+  color: #FFF673;
+}
+.colorFFCC00 {
+  color: #FFCC00;
+}
+.colorDDDD77 {
+  color: #DDDD77;
+}
+.colorFFFF00 {
+  color: #FFFF00;
+}
+.colorFF00FF {
+  color: #FF00FF;
+}
+.color6655CC {
+  color: #6655CC;
+}
+.color44DDFF {
+  color: #44DDFF;
+}
+.color9999A8 {
+  color: #9999A8;
+}
+.colorFF0000 {
+  color: #FF0000;
+}
+.colorF50F00 {
+  color: #F50F00;
+}
+.colorFFFF66 {
+  color: #FFFF66;
+}
+.colorD4BD22 {
+  color: #D4BD22;
+}
+.colorFFDD00 {
+  color: #FFDD00;
+}
+.colorffd700 {
+  color: #ffd700;
+}
+.color33FF33 {
+  color: #33FF33;
+}
+.colorFFDD77 {
+  color: #FFDD77;
+}
+.colorFFFF99 {
+  color: #FFFF99;
+}
+.color85FFAD {
+  color: #85FFAD;
+}
+.color3399FF {
+  color: #3399FF;
+}
+.color669900 {
+  color: #669900;
+}
+.colorcccccc {
+  color: #cccccc;
+}
+.color00DD33 {
+  color: #00DD33;
+}
+.colorFF9999 {
+  color: #FF9999;
+}
+.colorCCFF99 {
+  color: #CCFF99;
+}
+.color88FF88 {
+  color: #88FF88;
+}
+.color5555FF {
+  color: #5555FF;
+}
+.colorFFFF33 {
+  color: #FFFF33;
+}
+.colorFFAA33 {
+  color: #FFAA33;
+}
+.colorF0F2B1 {
+  color: #F0F2B1;
+}
+.colorFF6633 {
+  color: #FF6633;
+}
+.colorEDDA74 {
+  color: #EDDA74;
+}
+.colorBB77FF {
+  color: #BB77FF;
+}
+.colorFFE076 {
+  color: #FFE076;
+}
+.color0bf7de {
+  color: #0bf7de;
+}
+.coloree2222 {
+  color: #ee2222;
+}
+.color0000FF {
+  color: #0000FF;
+}
+.colorFFD700 {
+  color: #FFD700;
 }
 
 /*******************************************************/
 /********************** universal **********************/
 /*******************************************************/
+
+body {
+  background-color: #1D1D1D;
+}
 
 .center {
   text-align: center;
@@ -35,8 +175,13 @@ $purple: #6f5499;
 div.jumbotron {
  padding-top: 35px;
  padding-bottom: 30px;
+ background-color: $gray-dark;
  p {
+   color: $gray-medium-light;
    margin-bottom: 0px;
+ }
+ h1, h2, h3 {
+   color: $gray-medium-light;
  }
 }
 
@@ -69,6 +214,28 @@ div.progress {
 /*******************************************************/
 /*********************** header ************************/
 /*******************************************************/
+
+.navbar-inverse {
+  background-color: black;
+  border: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+  font-size: 15px;
+  color: white;
+  &:hover {
+    color: $gray-medium;
+  }
+  // background-color: black;
+  // border: none;
+  // .active a {
+  //   &:hover, &:focus {  
+  //     color: $gray-dark;
+  //     background: $gray-dark;
+  //   }
+  // }
+}
+
 li.version {
   font-size: 12px;
   overflow: hidden;
@@ -90,7 +257,7 @@ li.version {
   font-weight: bold;
   text-decoration: none;
   &:hover {
-    color: #E5E4E2;
+    color: $gray-medium;
   }
 }
 
@@ -138,9 +305,13 @@ div.champ-img-square {
   margin: 10px;
   border-radius: 10px;
   text-align: center;
-  background-color: $gray-medium-light;
+  background-color: $gray-dark;
   &:hover {
     background-color: $gray-medium;
+    border-color: $gray-dark;
+    p {
+      color: black;
+    }
   }
   img {
     border-radius: 10px;
@@ -148,7 +319,10 @@ div.champ-img-square {
   p {
     font-size: 18px;
     margin: 0px;
-    color: $gray-dark;
+    color: $gray-medium-light;
+    &:hover {
+      color: black;
+    }
   }
   a {
     text-decoration: none;
@@ -263,7 +437,7 @@ div.spell-top, div.passive-top {
 div.spell-bottom, div.passive-bottom {
   padding-top: 20px;
   margin-top: -3px;
-  border-top: 3px solid $gray-medium;
+  border-top: 3px solid $gray-medium-dark;
   margin-left: 7px;
   margin-right: 7px;
 }
@@ -291,7 +465,7 @@ div.spell-img, div.passive-img {
   margin-right: 15px;
   img {
     border-radius: 10px;
-    border: 3px solid $gray-dark;
+    border: 3px solid $gray-medium-dark;
   }
 }
 
@@ -313,7 +487,7 @@ p.cooldown, p.cost, p.range, p.invisible {
 
 div.lore {
   h2 {
-    border-bottom: 3px solid $gray-medium;
+    border-bottom: 3px solid $gray-medium-dark;
     margin-top: 0px;
     margin-bottom: 20px;
     padding-bottom: 5px;
