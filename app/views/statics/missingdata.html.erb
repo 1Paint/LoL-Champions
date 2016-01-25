@@ -1,5 +1,5 @@
-<p>An empty set of values is a set of values that has been removed due to redundancy, e.g. "...increased by 200% ({{ fX }})" where fX used to be "2.0" but was removed.</p>
-<p>A missing set of values is a set of missing information such as base damages or scaling values, e.g. 2 sets of missing data for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.</p>
+<p class="note">An empty set of values is a set of values that has been removed due to redundancy, e.g. "...increased by 200% ({{ fX }})" where fX used to be "2.0" but was removed.</p>
+<p class="note">A missing set of values is a set of missing information such as base damages or scaling values, e.g. 2 sets of missing data for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.</p>
 
 <% @champion.missing_data.each do |champ_name, data| %>
   <% if !data.empty? %>
