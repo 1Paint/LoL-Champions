@@ -98,9 +98,9 @@ class ChampionTest
     num_empty_data = @spell_description[button].scan("(*API DATA MISSING*)").count
     
     # Find number of empy data for each champion.
-    if num_empty_data != 0
-      puts "#{@champ_name_id}: #{button.upcase} has #{num_empty_data} empty set(s) of values"
-    end
+    # if num_empty_data != 0
+    #   puts "#{@champ_name_id}: #{button.upcase} has #{num_empty_data} empty set(s) of values"
+    # end
     
     # Missing values showing up as (+)
     num_missing_data = @spell_description[button].scan("*API DATA MISSING*").count
