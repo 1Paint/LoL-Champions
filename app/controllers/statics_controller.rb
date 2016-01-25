@@ -1,5 +1,6 @@
 class StaticsController < ApplicationController
-
+  before_action :get_version  # from application_contoller.rb
+  
   def home
     @current_version = get_version  # from application_contoller.rb
     
@@ -16,5 +17,8 @@ class StaticsController < ApplicationController
       
       @champion_list[:"#{champ_name_id}"] = champ_name
     end
+  end
+  
+  def contact
   end
 end
