@@ -2,8 +2,6 @@ class StaticsController < ApplicationController
   before_action :get_version  # from application_contoller.rb
   
   def home
-    @current_version = get_version  # from application_contoller.rb
-    
     @champion_list = Hash.new
     
     url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
@@ -20,5 +18,10 @@ class StaticsController < ApplicationController
   end
   
   def contact
+  end
+  
+  def missingdata
+    @champion = Champion.new
+    @champion.get_missing_data(@current_version)
   end
 end
