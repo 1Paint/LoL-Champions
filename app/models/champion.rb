@@ -197,28 +197,28 @@ class Champion < ActiveRecord::Base
       # check the most frequent normal value types first, followed by special
       # value types. Frequencies shown to the right of conditionals.
       if value_type == "spelldamage"  # 374
-        value_type = "Ability Power"
+        value_type = "AP"
         
       elsif value_type == "bonusattackdamage"  # 90
-        value_type = "Bonus Attack Damage"
+        value_type = "bonus AD"
         
       elsif value_type == "attackdamage"  # 47
-        value_type = "Attack Damage"
+        value_type = "AD"
         
       elsif value_type == "armor"  # 5
         value_type = "Armor"
         
       elsif value_type == "bonushealth"  # 5
-        value_type = "Bonus Health"
+        value_type = "bonus HP"
         
       elsif value_type == "health"  # 3
-        value_type = "Health"
+        value_type = "HP"
         
       elsif value_type == "bonusarmor"  # 1
-        value_type = "Bonus Armor"
+        value_type = "bonus Armor"
         
       elsif value_type == "bonusspellblock"  # 1 
-        value_type = "Bonus Magic Resist"
+        value_type = "bonus Magic Resist"
       end
       
       # Sanitize value types beginning with "@".
@@ -268,9 +268,9 @@ class Champion < ActiveRecord::Base
       
     elsif value_type[0..7] == "@dynamic"
       if value_type == "@dynamic.abilitypower"  # 4
-        value_type = "Ability Power"
+        value_type = "AP"
       elsif value_type == "@dynamic.attackdamage"  # 2
-        value_type = "Attack Damage"  
+        value_type = "AD"  
       end
       
       #---------------------------------------#
@@ -303,7 +303,7 @@ class Champion < ActiveRecord::Base
     # of twice the (base + bonus) damage.
     elsif value_type == "@special.dariusr3"  # 1
       # "100/200/300 (+0.75 bonus AD)" x2
-      @spell_values["{{ #{key} }}"] = '200/400/600 (+1.5 Bonus Attack Damage)'
+      @spell_values["{{ #{key} }}"] = '200/400/600 (+1.5 bonus AD)'
 
     #---------------------------------------#
     #               Jax Bug-fix             #
@@ -329,7 +329,7 @@ class Champion < ActiveRecord::Base
     # because the '%' sign is static in the text, placed after the spell value:
     # "[(Bonus Attack Damage)x(1/35)]".
     elsif value_type == "@special.viw"  # 1
-      @spell_values["{{ #{key} }}"] = "[(Bonus Attack Damage)x(1/35)]"
+      @spell_values["{{ #{key} }}"] = "[(bonus AD)x(1/35)]"
     
     #---------------------------------------#
     #      Stacks (Nasus, Veigar, etc.)     #

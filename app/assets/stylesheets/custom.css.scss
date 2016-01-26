@@ -180,6 +180,10 @@ div.jumbotron {
    color: $gray-medium-light;
    margin-bottom: 0px;
  }
+ li {
+   color: $gray-medium-light;
+   font-size: 18px;
+ }
  h1, h2, h3 {
    color: $gray-medium-light;
  }
@@ -226,14 +230,6 @@ div.progress {
   &:hover {
     color: $gray-medium;
   }
-  // background-color: black;
-  // border: none;
-  // .active a {
-  //   &:hover, &:focus {  
-  //     color: $gray-dark;
-  //     background: $gray-dark;
-  //   }
-  // }
 }
 
 li.version {
@@ -336,6 +332,9 @@ div.champ-img-square {
 //----------------------------------//
 //            name & stats          //
 //----------------------------------//
+
+.jumbotron.champ {
+}
 
 div.champ-img {
   float: left;
@@ -442,12 +441,12 @@ div.spell-bottom, div.passive-bottom {
   margin-right: 7px;
 }
 
-// spell cooldown (and name)
+// spell range (and name)
 div.spell-dynamics {
   float: left;
 }
 
-// spell cost and range
+// spell cost and cooldown
 div.spell-statics {
   float: right;
   padding-right: 7px;
@@ -480,6 +479,20 @@ p.cooldown, p.cost, p.range, p.invisible {
   margin-bottom: 0px;
   margin-right: 0px;
 }
+
+.spell-q {
+}
+.spell-w {
+}
+.spell-e {
+}
+.spell-r {
+}
+
+// .spell-e {
+//   background: url("http://ddragon.leagueoflegends.com/cdn/5.24.2/img/profileicon/588.png") no-repeat right top;
+//   overflow: hidden;
+// }
 
 //----------------------------------//
 //               Lore               //
