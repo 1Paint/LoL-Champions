@@ -1,0 +1,41 @@
+<table class="champs-table"
+       data-toggle="table"
+       data-sort-name="champ-name"
+       data-sort-order="asc">
+  <thead>
+  <tr>
+    <th data-field="champ-name" 
+        data-sortable="true">
+        Champion
+    </th>
+    <th data-field="attack" 
+        data-sortable="true">
+        Attack
+    </th>
+    <th data-field="defense" 
+        data-sortable="true">
+        Defense
+    </th>
+    <th data-field="magic" 
+        data-sortable="true">
+        Magic
+    </th>
+    <th data-field="difficulty" 
+        data-sortable="true">
+        Difficulty
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+    <% Champion.order(:champ_name_id) %>
+    <% Champion.all.each do |champ| %>
+    <tr>
+        <td><%= champ.champ_name_id %></td>
+        <td><%= champ.attack %></td>
+        <td><%= champ.defense %></td>
+        <td><%= champ.magic %></td>
+        <td><%= champ.difficulty %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

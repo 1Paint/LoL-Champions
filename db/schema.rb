@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160119005908) do
+ActiveRecord::Schema.define(version: 20160131033041) do
 
   create_table "champions", force: :cascade do |t|
     t.string   "champ_name_id"
@@ -19,6 +19,11 @@ ActiveRecord::Schema.define(version: 20160119005908) do
     t.string   "name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "attack"
+    t.integer  "defense"
+    t.integer  "magic"
+    t.integer  "difficulty"
+    t.string   "version"
   end
 
   add_index "champions", ["champ_name_id"], name: "index_champions_on_champ_name_id"

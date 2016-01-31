@@ -263,24 +263,24 @@ li.version {
 
 footer {
   padding-top: 100px;
-  clear: both;
   float: bottom;
   overflow: hidden;
   a {
-    color: black;
+    color: white;
     &:hover {
-      color: black;
+      color: $gray-medium;
     }
   }
   small {
+    font-size: 12px;
     float: left;
   }
   ul {
+    font-size: 12px;
     float: right;
     list-style: none;
     li {
       float: left;
-      margin-left: 15px;
     }
   }
 }
@@ -324,6 +324,19 @@ div.champ-img-square {
     text-decoration: none;
   }
 }
+
+/*******************************************************/
+/************************ index ************************/
+/*******************************************************/
+
+table.champs-table {
+  background-color: white;
+  text-align: center;
+  th {
+    text-align: center;
+  }
+}
+
 
 /*******************************************************/
 /******************** champion page ********************/
@@ -631,6 +644,14 @@ p.missingdata {
   div.lore {
     h2 {
       text-align: center;
+    }
+  }
+  
+  footer {
+    ul {
+      clear: left;
+      padding-left: 0px;
+      float: left;
     }
   }
 }

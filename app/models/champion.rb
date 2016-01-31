@@ -24,21 +24,26 @@ class Champion < ActiveRecord::Base
     @stat_range = Hash.new  # Stat names, base and max values.
   end
   
+  # Get the champion JSON file and parse it.
+  def get_data_set(champ_name_id, current_version)
+    @current_version = current_version
+    @champ_name_id = champ_name_id
+    
+    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
+    response = HTTParty.get(url)
+    @data = response.parsed_response
+  end
+  
   # Retrieve champion info, making attributes available to the controller/view.
   def retrieve(champ_name_id, current_version)
-    @current_version = current_version
-    
     # Create empty hashes to store spells' details.
     initialize_spells
     
     # Create empty hashes to store champion stats (HP, attack, defense, etc).
     initialize_stats
     
-    @champ_name_id = champ_name_id
-    
-    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
-    response = HTTParty.get(url)
-    @data = response.parsed_response
+    # Get the champion JSON file and parse it.
+    get_data_set(champ_name_id, current_version)
     
     # Champion info.
     @name = @data['data'][@champ_name_id]['name']
@@ -79,11 +84,6 @@ class Champion < ActiveRecord::Base
     @data['data'][@champ_name_id]['stats'].each do |stat_name, value|
       @stat[:"#{stat_name}"] = value
     end
-    
-    @resource = @data['data'][@champ_name_id]['partype']
-    if @resource == "MP"
-      @resource = "Mana"
-    end
   end
   
   # Using champion base stats and stat growth per level, calculate ranges.
@@ -99,7 +99,13 @@ class Champion < ActiveRecord::Base
     # Attack speed calculated with knowledge from in-game testing and http://leagueoflegends.wikia.com.
     base_attack_speed = 0.625 / (1 + @stat[:attackspeedoffset])
     @stat_max[:attackspeed] = base_attack_speed * (1 + (17 * @stat[:attackspeedperlevel]/100))
-
+    
+    # Obtain the resource of the champion.
+    @resource = @data['data'][@champ_name_id]['partype']
+    if @resource == "MP"
+      @resource = "Mana"
+    end
+    
     # Appears on champion page in order shown.
     @stat_range = { hp: { name: "Health",
                           min: @stat[:hp].round(1),
@@ -341,13 +347,15 @@ class Champion < ActiveRecord::Base
   end
   
   def get_missing_data(current_version)
+    @current_version = current_version
+    
     initialize_spells
     
     # Storage of missing data.
     @missing_data = Hash.new
 
     # Get all champions.
-    url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/champion.json"
+    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
     response = HTTParty.get(url)
     champions = response.parsed_response
     
@@ -359,7 +367,7 @@ class Champion < ActiveRecord::Base
       @champ_name = info['name']
       @missing_data[@champ_name] = []
       
-      url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/champion/#{@champ_name_id}.json"
+      url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
       response = HTTParty.get(url)
       @data = response.parsed_response
       
