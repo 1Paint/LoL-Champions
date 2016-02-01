@@ -52,10 +52,10 @@ class Champion < ActiveRecord::Base
     @lore = @data['data'][@champ_name_id]['lore']
     
     # Retrieve champion stats.
-    get_stats
+    get_stats(champ_name_id)
     
     # Retrieve champion stats at levels 1 and 18.
-    get_stats_ranges
+    get_stats_ranges(champ_name_id)
     
     # Passive info.
     @passive = @data['data'][@champ_name_id]['passive']['name']
@@ -71,9 +71,9 @@ class Champion < ActiveRecord::Base
   end
   
   # Retrieve champion stats such as HP, attack, defense, etc.
-  def get_stats
+  def get_stats(champ_name_id)
     # attack, magic, defense, difficulty.
-    @data['data'][@champ_name_id]['info'].each do |stat_name, value|
+    @data['data'][champ_name_id]['info'].each do |stat_name, value|
       @stat_summary[:"#{stat_name}"] = value
     end
     
@@ -81,13 +81,13 @@ class Champion < ActiveRecord::Base
     # spellblock, spellblockperlevel, attackrange, hpregen, hpregenperlevel,
     # mpregen, mpregenperlevel, crit, critperlevel, attackdamage,
     # attackdamageperlevel, attackspeedoffset, attackspeedperlevel.
-    @data['data'][@champ_name_id]['stats'].each do |stat_name, value|
+    @data['data'][champ_name_id]['stats'].each do |stat_name, value|
       @stat[:"#{stat_name}"] = value
     end
   end
   
   # Using champion base stats and stat growth per level, calculate ranges.
-  def get_stats_ranges
+  def get_stats_ranges(champ_name_id)
     @stat_max[:hp] = @stat[:hp] + (17 * @stat[:hpperlevel])
     @stat_max[:mp] = @stat[:mp] + (17 * @stat[:mpperlevel])
     @stat_max[:armor] = @stat[:armor] + (17 * @stat[:armorperlevel])
@@ -101,7 +101,7 @@ class Champion < ActiveRecord::Base
     @stat_max[:attackspeed] = base_attack_speed * (1 + (17 * @stat[:attackspeedperlevel]/100))
     
     # Obtain the resource of the champion.
-    @resource = @data['data'][@champ_name_id]['partype']
+    @resource = @data['data'][champ_name_id]['partype']
     if @resource == "MP"
       @resource = "Mana"
     end
@@ -419,7 +419,7 @@ end
 #   value_type = "Ability Power"
 # elsif value_type[10] == "k"  # ----------- 90 bonusattackdamage
 #   value_type = "Bonus Attack Damage"
-# elsif value_type[5] == "k"  # ------------ 47 attackdaage
+# elsif value_type[5] == "k"  # ------------ 47 attackdamage
 #   value_type = "Attack Damage"
 # elsif value_type[4] == "r"  # ------------ 5 armor
 #   value_type = "Armor"

@@ -28,14 +28,22 @@ class ChampionsController < ApplicationController
         champion.initialize_stats
         # Get the parsed Champion JSON file.
         champion.get_data_set(@champ_name_id, @current_version)
-        # Get the champion's general stats.
-        champion.get_stats
-        # Update the champions general stats and version #.
+        # Get the champion's general and detailed stats.
+        champion.get_stats(@champ_name_id)
+        champion.get_stats_ranges(@champ_name_id)
+        # Update the champion's general stats and version #.
         champion.update(attack: champion.stat_summary[:attack],
                         defense: champion.stat_summary[:defense],
                         magic: champion.stat_summary[:magic],
                         difficulty: champion.stat_summary[:difficulty],
                         version: @current_version)
+        # Update the champion's detailed stats (stats at levels 1 and 18).
+        # These stats include hp, hpregen, mp, mpregen, movespeed, armor, 
+        # spellblock, attackdamage, attackspeed, and attackrange.
+        champion.stat_range.each do |stat, values|
+          champion.update("#{stat}min": values[:min],
+                          "#{stat}max": values[:max])
+        end
       end # End iteration through each champion.
     end # End of the version-checking conditional.
   end

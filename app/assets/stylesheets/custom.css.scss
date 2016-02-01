@@ -329,11 +329,56 @@ div.champ-img-square {
 /************************ index ************************/
 /*******************************************************/
 
-table.champs-table {
+.nav-pills {
+  border: none;
+}
+
+h2.champs-table-title {
+  color: white;
+}
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  color:black;
+  background-color: $gray-medium;
+}
+
+.nav-tabs > li > a, .nav-pills > li > a {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+}
+
+a.white {
+  font-size: 18px;
+  background-color: $gray-dark;
+  color: $gray-medium-light;
+  &:hover {
+    background-color: $gray-medium;
+    color: black;
+  }
+}
+
+table.champs-table-general, table.champs-table-detailed {
   background-color: white;
   text-align: center;
+  border-radius: 5px;
   th {
     text-align: center;
+  }
+  td.name {
+    
+  }
+  td.attack {
+    color: $red;
+  }
+  td.defense {
+    color: $green;
+  }
+  td.magic {
+    color: $blue;
+  }
+  td.difficulty {
+    color: $purple;
   }
 }
 

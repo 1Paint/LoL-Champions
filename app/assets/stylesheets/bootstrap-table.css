@@ -8,7 +8,7 @@
     margin-bottom: 0 !important;
     border-bottom: 1px solid #dddddd;
     border-collapse: collapse !important;
-    border-radius: 1px;
+    /*border-radius: 1px;*/
 }
 
 .bootstrap-table .table:not(.table-condensed),
@@ -17,7 +17,7 @@
 .bootstrap-table .table:not(.table-condensed) > thead > tr > td,
 .bootstrap-table .table:not(.table-condensed) > tbody > tr > td,
 .bootstrap-table .table:not(.table-condensed) > tfoot > tr > td {
-    padding: 8px;
+    padding: 2px;
 }
 
 .bootstrap-table .table.table-no-bordered > thead > tr > th,
@@ -28,7 +28,7 @@
 .fixed-table-container {
     position: relative;
     clear: both;
-    border: 1px solid #dddddd;
+    /*border: 1px solid white;*/
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -77,19 +77,19 @@
 
 .fixed-table-container thead th .th-inner,
 .fixed-table-container tbody td .th-inner {
-    padding: 8px;
+    padding: 5px;
     line-height: 24px;
-    vertical-align: top;
+    vertical-align: middlet
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    /*white-space: nowrap;*/
 }
 
 .fixed-table-container thead th .sortable {
     cursor: pointer;
     background-position: right;
     background-repeat: no-repeat;
-    padding-right: 30px;
+    padding-right: 15px;
 }
 
 .fixed-table-container thead th .both {
@@ -261,7 +261,7 @@
 }
 
 .bootstrap-table .table > thead > tr > th {
-    vertical-align: bottom;
+    vertical-align: middle;
     border-bottom: 1px solid #ddd;
 }
 
