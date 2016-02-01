@@ -41,8 +41,8 @@ class ChampionsController < ApplicationController
         # These stats include hp, hpregen, mp, mpregen, movespeed, armor, 
         # spellblock, attackdamage, attackspeed, and attackrange.
         champion.stat_range.each do |stat, values|
-          champion.update("#{stat}min": values[:min],
-                          "#{stat}max": values[:max])
+          champion.update("#{stat}min".to_sym => values[:min],
+                          "#{stat}max".to_sym => values[:max])
         end
       end # End iteration through each champion.
     end # End of the version-checking conditional.
