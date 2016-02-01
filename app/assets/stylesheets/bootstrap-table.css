@@ -79,7 +79,7 @@
 .fixed-table-container tbody td .th-inner {
     padding: 5px;
     line-height: 24px;
-    vertical-align: middlet
+    vertical-align: middle;
     overflow: hidden;
     text-overflow: ellipsis;
     /*white-space: nowrap;*/
