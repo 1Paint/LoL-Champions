@@ -39,7 +39,7 @@
           <% Champion.order(:champ_name_id) %>
           <% Champion.all.each do |champ| %>
           <tr>
-            <td class="col-md-1 name"><%= champ.champ_name_id %></td>
+            <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ.champ_name_id}" %>><%= champ.champ_name_id %></td>
             <td class="col-md-1 attack"><%= champ.attack %></td>
             <td class="col-md-1 defense"><%= champ.defense %></td>
             <td class="col-md-1 magic"><%= champ.magic %></td>
@@ -106,7 +106,7 @@
           <% Champion.order(:champ_name_id) %>
           <% Champion.all.each do |champ| %>
           <tr>
-            <td class="col-md-1 name"><%= champ.champ_name_id %></td>
+            <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ.champ_name_id}" %>><%= champ.champ_name_id %></td>
             <td class="col-md-1 hp"><%= champ.hpmin %></td>
             <td class="col-md-1 hpregen"><%= champ.hpregenmin %></td>
             <td class="col-md-1 mp"><%= champ.mpmin %></td>
@@ -179,7 +179,7 @@
           <% Champion.order(:champ_name_id) %>
           <% Champion.all.each do |champ| %>
           <tr>
-            <td class="col-md-1 name"><%= champ.champ_name_id %></td>
+            <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ.champ_name_id}" %>><%= champ.champ_name_id %></td>
             <td class="col-md-1 hp"><%= champ.hpmax %></td>
             <td class="col-md-1 hpregen"><%= champ.hpregenmax %></td>
             <td class="col-md-1 mp"><%= champ.mpmax %></td>

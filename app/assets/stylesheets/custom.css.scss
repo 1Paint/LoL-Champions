@@ -361,12 +361,16 @@ a.white {
 table.champs-table-general, table.champs-table-detailed {
   background-color: white;
   text-align: center;
+  border-collapse: separate;
   border-radius: 5px;
   th {
     text-align: center;
   }
+  a.name {
+    color: black;
+  }
   td.name {
-    
+
   }
   td.attack {
     color: $red;
