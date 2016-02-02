@@ -1,13 +1,13 @@
 <div class="jumbotron champ">
   <div class="champ-info">
     <div class="champ-title">
-      <h1 class="champ-name"><%= @champion.name %></h1>
+      <h1 class="champ-name"><%= @champion.champ_name %></h1>
       <h3 class="champ-title"><%= @champion.title %></h3>
     </div><!--end of champ title and name-->
     
     <div class="champ-details">
       <div class="champ-img">
-        <img class="champ-img" src=<%= @champion.champ_img_url %> alt=<%= @champion.name %> />
+        <img class="champ-img" src=<%= @champion.champ_img_url %> alt=<%= @champion.champ_name %> />
       </div>
       
       <!-- Attack, Defense, Magic, Difficulty ratings out of 10 -->
