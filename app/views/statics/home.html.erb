@@ -1,10 +1,10 @@
 <div class="champions-grid">
-  <% @champion_list.sort.to_h.each do |champ_name, champ_name_id| %>
-    <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_id}.png" %>
+  <% @champion_list.sort.each do |champ_name_and_id| %>
+    <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_and_id[1]}.png" %>
     <div class="champ-img-square">
-      <a href=<%= "/champions/#{champ_name_id}" %>>
+      <a href=<%= "/champions/#{champ_name_and_id[1]}" %>>
         <img src="<%= champ_img_url %>">
-        <p><%= champ_name %></p>
+        <p><%= champ_name_and_id[0] %></p>
       </a>
     </div>
   <% end %>
