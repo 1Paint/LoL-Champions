@@ -384,6 +384,9 @@ table.champs-table-general, table.champs-table-detailed {
   td.difficulty {
     color: $purple;
   }
+  .energy, .energyregen {
+    color: orange;
+  }
 }
 
 

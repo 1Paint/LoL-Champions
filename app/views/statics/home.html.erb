@@ -1,11 +1,6 @@
 <div class="champions-grid">
-  <% @champion_list.each do |champ_name_id, champ_name| %>
+  <% @champion_list.each do |champ_name, champ_name_id| %>
     <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_id}.png" %>
-    
-    <% if champ_name == "Wukong" %>
-      <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_id}.png" %>
-    <% end %>
-    
     <div class="champ-img-square">
       <a href=<%= "/champions/#{champ_name_id}" %>>
         <img src="<%= champ_img_url %>">

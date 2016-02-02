@@ -1,0 +1,43 @@
+<div id="general" class="tab-pane fade in active">
+  <table class="champs-table-general table-responsive table-striped"
+         data-toggle="table"
+         data-sort-name="champ-name"
+         data-sort-order="asc">
+    <thead>
+    <tr>
+      <th data-field="champ-name" 
+          data-sortable="true">
+          Champion
+      </th>
+      <th data-field="attack" 
+          data-sortable="true">
+          Attack
+      </th>
+      <th data-field="defense" 
+          data-sortable="true">
+          Defense
+      </th>
+      <th data-field="magic" 
+          data-sortable="true">
+          Magic
+      </th>
+      <th data-field="difficulty" 
+          data-sortable="true">
+          Difficulty
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+      <% Champion.order(:champ_name_id) %>
+      <% Champion.all.each do |champ| %>
+      <tr>
+        <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></td>
+        <td class="col-md-1 attack"><%= champ[:attack] %></td>
+        <td class="col-md-1 defense"><%= champ[:defense] %></td>
+        <td class="col-md-1 magic"><%= champ[:magic] %></td>
+        <td class="col-md-1 difficulty"><%= champ[:difficulty] %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

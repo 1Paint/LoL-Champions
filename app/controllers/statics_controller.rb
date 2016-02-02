@@ -4,6 +4,7 @@ class StaticsController < ApplicationController
   def home
     @champion_list = Hash.new
     
+    # Get all champion name IDs and names.
     url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
     response = HTTParty.get(url)
     data = response.parsed_response
@@ -13,7 +14,9 @@ class StaticsController < ApplicationController
       champ_name_id = info['id']  # Champion name ID, e.g. KhaZix, MasterYi
       champ_name = info['name']   # Champion name, e.g. Kha'Zix, Master Yi
       
-      @champion_list[:"#{champ_name_id}"] = champ_name
+      @champion_list[:"#{champ_name}"] = champ_name_id
+      # Sort the list of champions by name (to avoid listing Wukong in the wrong order since his champion_name_id is MonkeyKing).
+      @champion_list = @champion_list.sort.to_h
     end
   end
   
