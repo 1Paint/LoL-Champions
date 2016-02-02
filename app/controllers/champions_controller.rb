@@ -2,6 +2,7 @@ class ChampionsController < ApplicationController
   before_action :get_version  # from application_contoller.rb
   
   def index
+    @current_version = "6.2.1"
     # Obtain current champions
     url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
     response = HTTParty.get(url)

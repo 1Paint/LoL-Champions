@@ -1,6 +1,6 @@
 class Champion < ActiveRecord::Base
   
-  attr_accessor :name, :champ_img_url, :title, :lore, :current_version,
+  attr_accessor :champ_name, :champ_img_url, :title, :lore, :current_version,
                 :stat_summary, :stat, :stat_range, :resource,
                 :passive, :passive_img_url, :passive_description,
                 :spell_name, :spell_img_name, :spell_img_url, 
@@ -46,7 +46,7 @@ class Champion < ActiveRecord::Base
     get_data_set(champ_name_id, current_version)
     
     # Champion info.
-    @name = @data['data'][@champ_name_id]['name']
+    @champ_name = @data['data'][@champ_name_id]['name']
     @champ_img_url = "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/#{@champ_name_id}_0.jpg"
     @title = @data['data'][@champ_name_id]['title']
     @lore = @data['data'][@champ_name_id]['lore']
