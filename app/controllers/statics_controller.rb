@@ -16,7 +16,6 @@ class StaticsController < ApplicationController
       
       @champion_list[:"#{champ_name}"] = champ_name_id
       # Sort the list of champions by name (to avoid listing Wukong in the wrong order since his champion_name_id is MonkeyKing).
-      @champion_list = @champion_list.sort.to_h
     end
   end
   

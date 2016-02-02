@@ -1,4 +1,5 @@
 <div class="champions-grid">
+  <% @champion_list = @champion_list.sort.to_h %>
   <% @champion_list.each do |champ_name, champ_name_id| %>
     <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_id}.png" %>
     <div class="champ-img-square">
