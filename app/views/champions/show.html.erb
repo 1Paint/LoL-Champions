@@ -2,17 +2,11 @@
 
 <%= render 'passive' %>
 
-<!-- @spell_buttons must be :q, :w, :e, or :r -->
-<% @spell_button = "q" %>
-<%= render 'spell' %>
+<% @buttons = ["q", "w", "e", "r"] %>
 
-<% @spell_button = "w" %>
-<%= render 'spell' %>
-
-<% @spell_button = "e" %>
-<%= render 'spell' %>
-
-<% @spell_button = "r" %>
-<%= render 'spell' %>
+<% @buttons.each do |button| %>
+  <% @spell_button = button %>
+  <%= render 'spell' %>
+<% end %>
 
 <%= render 'lore' %>

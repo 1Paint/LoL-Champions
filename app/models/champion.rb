@@ -161,9 +161,21 @@ class Champion < ActiveRecord::Base
     @spell_range[button] = @data['data'][@champ_name_id]['spells'][num]['rangeBurn']
     
     input_spell_values(button, num)
+    
+    # If the spell has two forms, get the other form (e.g. Elise and Nidalee).
+    if !@data['data'][@champ_name_id]['spells'][num+4].nil?
+      @spell_name["#{button}2".to_sym] = @data['data'][@champ_name_id]['spells'][num+4]['name']
+      @spell_img_name["#{button}2".to_sym] = @data['data'][@champ_name_id]['spells'][num+4]['id']
+      @spell_img_url["#{button}2".to_sym] = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/spell/#{@spell_img_name["#{button}2".to_sym]}.png"
+      @spell_range["#{button}2".to_sym] = @data['data'][@champ_name_id]['spells'][num+4]['rangeBurn']
+      
+      input_spell_values("#{button}2".to_sym, num+4)
+    end
   end
   
   # Replace all {{ xX }} strings in spell details with actual values.
+  # Should have this method only occur once per game version, i.e. store in
+  # spell descriptions in database.
   def input_spell_values(button, num)
     # Storage of spell values.
     @spell_values = Hash.new("**Missing/Misplaced API Data**")

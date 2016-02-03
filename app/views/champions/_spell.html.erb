@@ -16,4 +16,25 @@
   <div class="spell-bottom">
     <p><%= @champion.spell_description[@spell_button.to_sym].html_safe %></p>
   </div>
+  
+  <% # If second form of spell isn't empty, render it. %>
+  <% if !@champion.spell_img_url["#{@spell_button}2".to_sym].nil? %>
+    <div class="spell-top secondary-spell" >
+      <div class="spell-img">
+        <img src=<%= @champion.spell_img_url["#{@spell_button}2".to_sym] %> />
+      </div>
+      <div class="spell-dynamics">
+        <h2 class="spell-name"><%= @champion.spell_name["#{@spell_button}2".to_sym] %></h2>
+        <p class="range">Range: <%= @champion.spell_range["#{@spell_button}2".to_sym] %></p>
+      </div>
+      
+      <div class="spell-statics">
+        <p class="cooldown">Cooldown: <%= @champion.spell_cooldown["#{@spell_button}2".to_sym] %> seconds</p>
+        <p class="cost">Cost: <%= @champion.spell_cost["#{@spell_button}2".to_sym] %></p>
+      </div>
+    </div>
+    <div class="spell-bottom">
+      <p><%= @champion.spell_description["#{@spell_button}2".to_sym].html_safe %></p>
+    </div>
+  <% end %>
 </div>

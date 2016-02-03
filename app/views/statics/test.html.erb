@@ -1,0 +1,68 @@
+<div id="general" class="tab-pane fade in active full-height">
+  <table class="champs-table-general table-responsive table-striped scroll"
+         data-toggle="table"
+         data-sort-name="champ-name"
+         data-sort-order="asc">
+    <thead data-spy="affix">
+      <tr>
+        <th class="col-md-1"
+            data-field="champ-name" 
+            data-sortable="true">
+            Champion
+        </th>
+        <th class="col-md-1"
+            data-field="attack" 
+            data-sortable="true">
+            Attack
+        </th>
+        <th class="col-md-1"
+            data-field="defense" 
+            data-sortable="true">
+            Defense
+        </th>
+        <th class="col-md-1"
+            data-field="magic" 
+            data-sortable="true">
+            Magic
+        </th>
+        <th class="col-md-1"
+            data-field="difficulty" 
+            data-sortable="true">
+            Difficulty
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% Champion.order(:champ_name_id) %>
+      <% Champion.all.each do |champ| %>
+      <tr>
+        <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></td>
+        <td class="col-md-1 attack"><%= champ[:attack] %></td>
+        <td class="col-md-1 defense"><%= champ[:defense] %></td>
+        <td class="col-md-1 magic"><%= champ[:magic] %></td>
+        <td class="col-md-1 difficulty"><%= champ[:difficulty] %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+// Change the selector if needed
+var $table = $('table.scroll'),
+    $bodyCells = $table.find('tbody tr:first').children(),
+    colWidth;
+
+// Adjust the width of thead cells when window resizes
+$(window).resize(function() {
+    // Get the tbody columns width array
+    colWidth = $bodyCells.map(function() {
+        return $(this).width();
+    }).get();
+    
+    // Set the width of thead columns
+    $table.find('thead tr').children().each(function(i, v) {
+        $(v).width(colWidth[i]);
+    });    
+}).resize(); // Trigger resize handler
+</script>

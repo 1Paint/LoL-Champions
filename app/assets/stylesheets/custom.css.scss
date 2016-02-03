@@ -363,6 +363,9 @@ table.champs-table-general, table.champs-table-detailed {
   text-align: center;
   border: none;
   border-radius: 5px;
+  thead {
+    width: 100%;
+  }
   th {
     text-align: center;
   }
@@ -496,6 +499,18 @@ table.stats {
 div.spell-top, div.passive-top {
   overflow: hidden;
 }
+
+div.secondary-spell {
+  padding-top: 35px;
+}
+
+// div.h-line {
+//   padding-top: 20px;
+//   border-bottom: 3px dashed $gray-medium-dark;
+//   text-align: center;
+//   margin: auto;
+//   width: 90%;
+// }
 
 // spell description
 div.spell-bottom, div.passive-bottom {
