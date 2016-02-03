@@ -398,6 +398,21 @@ class Champion < ActiveRecord::Base
         num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
         num_missing_data += @spell_cost[button].scan("**Missing/Misplaced API Data**").count
         
+        # For champions with secondary spells.
+        if !@data['data'][@champ_name_id]['spells'][num+4].nil?
+          # Spell resource.
+          resource = @data['data'][@champ_name_id]['spells'][num+4]['resource']
+          @spell_cost["#{button}2".to_sym] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
+          
+          # Empty values showing up as ().
+          num_empty_data += @spell_description["#{button}2".to_sym].scan("(**Missing/Misplaced API Data**)").count
+          num_empty_data += @spell_cost["#{button}2".to_sym].scan("(**Missing/Misplaced API Data**)").count
+          
+          # Missing values showing up as (+)
+          num_missing_data += @spell_description["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
+          num_missing_data += @spell_cost["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
+        end
+        
         # Find number of empy data for each champion.
         if num_empty_data != 0
           @missing_data[@champ_name].concat(["#{button.upcase} has #{num_empty_data} empty set(s) of values"])
