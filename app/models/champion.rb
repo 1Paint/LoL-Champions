@@ -255,7 +255,7 @@ class Champion < ActiveRecord::Base
     @spell_description[button] = @data['data'][@champ_name_id]['spells'][num]['tooltip']
     
     # Substitute spell values into spell descriptions, replacing all "{{ eX }}" and similar.
-    @spell_description[button] = @spell_description[button].gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
+    @spell_description[button] = @spell_description[button].gsub(/{{(.*?)}}/, @spell_values)
     
     # # Remove empty values---values showing up as "()". The values seem to have
     # # been removed because they were redundant.
