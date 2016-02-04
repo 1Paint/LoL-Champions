@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
     response = HTTParty.get(url)
     data = response.parsed_response
     @current_version = data[0]
-    @current_version = "6.1.1"
+
     # If the version has changed, update all champions and their stats.
     if Champion.first.version != @current_version
       update_version
