@@ -1,11 +1,18 @@
-<div class="champions-grid">
-  <% @champion_list.sort.each do |champ_name_and_id| %>
-    <% champ_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/champion/#{champ_name_and_id[1]}.png" %>
-    <div class="champ-img-square">
-      <a href=<%= "/champions/#{champ_name_and_id[1]}" %>>
-        <img src="<%= champ_img_url %>">
-        <p><%= champ_name_and_id[0] %></p>
-      </a>
-    </div>
+<div class="roles-pills"> 
+  <ul class="nav nav-pills nav-justified white roles">
+    <li class="active"><a class="white" data-toggle="tab" href="#all">All</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#assassin">Assassin</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#fighter">Fighter</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#mage">Mage</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#marksman">Marksman</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#support">Support</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#tank">Tank</a></li>
+  </ul>
+</div>
+<div class="tab-content">
+  <% @types = ["all", "assassin", "fighter", "mage", "marksman", "support", "tank"] %>
+  <% @types.each do |type| %>
+    <% @type = type %>
+    <%= render 'champs_grid' %>
   <% end %>
 </div>

@@ -5,7 +5,7 @@ class Champion < ActiveRecord::Base
                 :passive, :passive_img_url, :passive_description,
                 :spell_name, :spell_img_name, :spell_img_url, 
                 :spell_cooldown, :spell_cost, :spell_range, :spell_description,
-                :missing_data
+                :missing_data, :primary_role, :secondary_role
   
   def initialize_spells
     @spell_name = Hash.new
@@ -427,6 +427,12 @@ class Champion < ActiveRecord::Base
         end
       end
     end
+  end
+  
+  # Find and the champion's primary and secondary roles.
+  def get_roles(champion,  data)
+    @primary_role = data['data'][champ_name_id]['tags'][0]
+    @secondary_role = data['data'][champ_name_id]['tags'][1]
   end
 end
 
