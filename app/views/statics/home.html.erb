@@ -1,16 +1,16 @@
 <div class="roles-pills"> 
   <ul class="nav nav-pills nav-justified white roles">
-    <li class="active"><a class="white" data-toggle="tab" href="#all">All</a></li>
-    <li><a class="white roles" data-toggle="tab" href="#assassin">Assassin</a></li>
-    <li><a class="white roles" data-toggle="tab" href="#fighter">Fighter</a></li>
-    <li><a class="white roles" data-toggle="tab" href="#mage">Mage</a></li>
-    <li><a class="white roles" data-toggle="tab" href="#marksman">Marksman</a></li>
-    <li><a class="white roles" data-toggle="tab" href="#support">Support</a></li>
-    <li><a class="white roles" data-toggle="tab" href="#tank">Tank</a></li>
+    <li class="active"><a class="white" data-toggle="tab" href="#All">All</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#Assassin">Assassin</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#Fighter">Fighter</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#Mage">Mage</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#Marksman">Marksman</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#Support">Support</a></li>
+    <li><a class="white roles" data-toggle="tab" href="#Tank">Tank</a></li>
   </ul>
 </div>
 <div class="tab-content">
-  <% @types = ["all", "assassin", "fighter", "mage", "marksman", "support", "tank"] %>
+  <% @types = ["All", "Assassin", "Fighter", "Mage", "Marksman", "Support", "Tank"] %>
   <% @types.each do |type| %>
     <% @type = type %>
     <%= render 'champs_grid' %>

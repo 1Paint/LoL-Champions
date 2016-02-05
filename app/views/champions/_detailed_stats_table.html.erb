@@ -1,61 +1,28 @@
 <div id=<%= "detailed#{@table_type}" %> class="tab-pane fade">
-  <table class="champs-table-detailed table-responsive table-striped"
+  <table class="champs-table-detailed table table-bordered table-condensed table-hover table-responsive tablesorter"
          data-toggle="table"
          data-sort-name="champ-name"
          data-sort-order="asc">
     <thead>
-      <tr>
-        <th data-field="champ-name" 
-            data-sortable="true">
-            Champion
-        </th>
-        <th data-field="hp" 
-            data-sortable="true">
-            Health
-        </th>
-        <th data-field="hpregen" 
-            data-sortable="true">
-            Health Regen
-        </th>
-        <th data-field="mp" 
-            data-sortable="true">
-            Mana
-        </th>
-        <th data-field="mpregen" 
-            data-sortable="true">
-            Mana Regen
-        </th>
-        <th data-field="movespeed" 
-            data-sortable="true">
-            Movespeed
-        </th>
-        <th data-field="armor" 
-            data-sortable="true">
-            Armor
-        </th>
-        <th data-field="spellblock" 
-            data-sortable="true">
-            Magic Resist
-        </th>
-        <th data-field="attackdamage"
-            data-sortable="true">
-            Attack Damage
-        </th>
-        <th data-field="attackspeed" 
-            data-sortable="true">
-            Attack Speed
-        </th>
-        <th data-field="attackrange" 
-            data-sortable="true">
-            Attack Range
-        </th>
+      <tr class="head">
+        <th>Champion</th>
+        <th class="{sorter: 'digit'}">Health</th>
+        <th class="{sorter: 'digit'}">Health Regen</th>
+        <th class="{sorter: 'digit'}">Mana</th>
+        <th class="{sorter: 'digit'}">Mana Regen</th>
+        <th class="{sorter: 'digit'}">Movespeed</th>
+        <th class="{sorter: 'digit'}">Armor</th>
+        <th class="{sorter: 'digit'}">Magic Resist</th>
+        <th class="{sorter: 'digit'}">Attack Damage</th>
+        <th class="{sorter: 'digit'}">Attack Speed</th>
+        <th class="{sorter: 'digit'}">Attack Range</th>
       </tr>
     </thead>
     <tbody>
       <% Champion.order(:champ_name_id) %>
       <% Champion.all.each do |champ| %>
       <tr>
-        <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></td>
+        <td class="col-md-1 name <%= champ[:primary] %>"><a class="name" href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></td>
         <td class="col-md-1 hp"><%= champ["hp#{@table_type}"] %></td>
         <td class="col-md-1 hpregen"><%= champ["hpregen#{@table_type}"] %></td>
         

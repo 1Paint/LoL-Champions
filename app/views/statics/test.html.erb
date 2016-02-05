@@ -1,68 +1,50 @@
-<div id="general" class="tab-pane fade in active full-height">
-  <table class="champs-table-general table-responsive table-striped scroll"
-         data-toggle="table"
-         data-sort-name="champ-name"
-         data-sort-order="asc">
-    <thead data-spy="affix">
-      <tr>
-        <th class="col-md-1"
-            data-field="champ-name" 
-            data-sortable="true">
-            Champion
-        </th>
-        <th class="col-md-1"
-            data-field="attack" 
-            data-sortable="true">
-            Attack
-        </th>
-        <th class="col-md-1"
-            data-field="defense" 
-            data-sortable="true">
-            Defense
-        </th>
-        <th class="col-md-1"
-            data-field="magic" 
-            data-sortable="true">
-            Magic
-        </th>
-        <th class="col-md-1"
-            data-field="difficulty" 
-            data-sortable="true">
-            Difficulty
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% Champion.order(:champ_name_id) %>
-      <% Champion.all.each do |champ| %>
-      <tr>
-        <td class="col-md-1 name"><a class="name" href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></td>
-        <td class="col-md-1 attack"><%= champ[:attack] %></td>
-        <td class="col-md-1 defense"><%= champ[:defense] %></td>
-        <td class="col-md-1 magic"><%= champ[:magic] %></td>
-        <td class="col-md-1 difficulty"><%= champ[:difficulty] %></td>
-      </tr>
-      <% end %>
-    </tbody>
-  </table>
+<div class="container">
+  <h2 class="champs-table-title">Champion Index</h2>
+  <ul class="nav nav-pills nav-justified white stats">
+    <li class="active"><a class="white stats" data-toggle="tab" href="#general">General Stats</a></li>
+    <li><a class="white stats" data-toggle="tab" href="#detailedmin">Level 1 Stats</a></li>
+    <li><a class="white stats" data-toggle="tab" href="#detailedmax">Level 18 Stats</a></li>
+  </ul>
+  
+  <input class="all" type="checkbox" value="all">All
+  <br/>
+  <input class="assassin" type="checkbox" value="Assassin">Assassin
+  <br/>
+  <input class="fighter" type="checkbox" value="Fighter">Fighter
+  <br/>
+  <input class="mage" type="checkbox" value="Mage">Mage
+  <br/>
+  <input class="marksman" type="checkbox" value="Marksman">Marksman
+  <br/>
+  <input class="support" type="checkbox" value="Support">Support
+  <br/>
+  <input class="tank" type="checkbox" value="Tank">Tank
+  <br/>
+  
+  <div class="tab-content">
+    <%= render 'general_stats_table' %>
+    
+    <% @table_type = 'min' %>
+    <%= render 'detailed_stats_table' %>
+    
+    <% @table_type = 'max' %>
+    <%= render 'detailed_stats_table' %>
+  </div>
 </div>
 
 <script>
-// Change the selector if needed
-var $table = $('table.scroll'),
-    $bodyCells = $table.find('tbody tr:first').children(),
-    colWidth;
-
-// Adjust the width of thead cells when window resizes
-$(window).resize(function() {
-    // Get the tbody columns width array
-    colWidth = $bodyCells.map(function() {
-        return $(this).width();
-    }).get();
-    
-    // Set the width of thead columns
-    $table.find('thead tr').children().each(function(i, v) {
-        $(v).width(colWidth[i]);
-    });    
-}).resize(); // Trigger resize handler
+  $("input:checkbox").click(function () {
+    var showAll = true;
+    $('tr').not('.first').hide();
+    $('input[type=checkbox]').each(function () {
+      if ($(this)[0].checked) {
+        showAll = false;
+        var value = $(this).val();            
+        $('td' + '[rel="' + value + '"]').parent('tr').show();
+      }
+    });
+    if(showAll){
+        $('tr').show();
+    }
+  });
 </script>

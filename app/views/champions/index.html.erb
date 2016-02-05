@@ -5,6 +5,28 @@
     <li><a class="white stats" data-toggle="tab" href="#detailedmin">Level 1 Stats</a></li>
     <li><a class="white stats" data-toggle="tab" href="#detailedmax">Level 18 Stats</a></li>
   </ul>
+  
+  <div class="checkboxes">
+    <label>
+      <input class="assassin" type="checkbox" value="Assassin"><span>Assassin</span>
+    </label>
+    <label>
+      <input class="fighter" type="checkbox" value="Fighter"><span>Fighter</span>
+    </label>
+    <label>
+      <input class="mage" type="checkbox" value="Mage"><span>Mage</span>
+    </label>
+    <label>
+      <input class="marksman" type="checkbox" value="Marksman"><span>Marksman</span>
+    </label>
+    <label>
+      <input class="support" type="checkbox" value="Support"><span>Support</span>
+    </label>
+    <label>
+      <input class="tank" type="checkbox" value="Tank"><span>Tank</span>
+    </label>
+  </div>
+  
   <div class="tab-content">
     <%= render 'general_stats_table' %>
     
@@ -15,3 +37,28 @@
     <%= render 'detailed_stats_table' %>
   </div>
 </div>
+
+<script>
+  $("input:checkbox").click(function () {
+    var showAll = true;
+    $('tr').not('.head').hide();
+    $('input[type=checkbox]').each(function () {
+      if ($(this)[0].checked) {
+        showAll = false;
+        var value = $(this).val();            
+        $('td.' + value).parent('tr').show();
+      }
+    });
+    if(showAll){
+      $('tr').show();
+    }
+  });
+</script>
+
+<script>
+  $(document).ready(function() 
+    { 
+      $("table.tablesorter").tablesorter( {sortList: [[0,0]]} ); 
+    } 
+  );  
+</script>

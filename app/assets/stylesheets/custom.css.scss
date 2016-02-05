@@ -215,16 +215,10 @@ div.progress {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-  
-// .nav-pills {
-//   text-align: center;
-//   table-layout: fixed;
-//   display: table;
-//   width: 100%;
-//   li {
-//     width: 100%;
-//   }
-// }
+
+html {
+  overflow-y: scroll;
+}
 
 /*******************************************************/
 /*********************** header ************************/
@@ -366,6 +360,18 @@ ul.stats {
   }
 }
 
+div.checkboxes {
+  width: 100%;
+  padding-bottom: 10px;
+  label {
+    color: white;
+  }
+  span {
+    padding-left: 3px;
+    padding-right: 20px;
+  }
+}
+
 a.white {
   font-size: 18px;
   background-color: $gray-dark;
@@ -379,8 +385,8 @@ a.white {
 table.champs-table-general, table.champs-table-detailed {
   background-color: white;
   text-align: center;
-  border: none;
-  border-radius: 5px;
+  border: 3px solid gray;
+  width: 100%;
   thead {
     width: 100%;
   }
@@ -410,6 +416,9 @@ table.champs-table-general, table.champs-table-detailed {
   }
 }
 
+.table > thead > tr > th {
+  vertical-align: middle;
+}
 
 /*******************************************************/
 /******************** champion page ********************/
@@ -522,14 +531,6 @@ div.secondary-spell {
   padding-top: 35px;
 }
 
-// div.h-line {
-//   padding-top: 20px;
-//   border-bottom: 3px dashed $gray-medium-dark;
-//   text-align: center;
-//   margin: auto;
-//   width: 90%;
-// }
-
 // spell description
 div.spell-bottom, div.passive-bottom {
   padding-top: 20px;
@@ -587,10 +588,6 @@ p.cooldown, p.cost, p.range, p.invisible {
 .spell-r {
 }
 
-// .spell-e {
-//   background: url("http://ddragon.leagueoflegends.com/cdn/5.24.2/img/profileicon/588.png") no-repeat right top;
-//   overflow: hidden;
-// }
 
 //----------------------------------//
 //               Lore               //
