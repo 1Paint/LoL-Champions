@@ -383,12 +383,12 @@ a.white {
 }
 
 table.champs-table-general, table.champs-table-detailed {
+  overflow-x: auto;
   background-color: white;
   text-align: center;
   border: 3px solid gray;
   width: 100%;
   thead {
-    width: 100%;
   }
   th {
     text-align: center;
