@@ -3,6 +3,8 @@ Champions
 
 A web app displaying League of Legends champion stats and abilities.
 
+Currently hosted at [https://sleepy-cliffs-16895.herokuapp.com/](https://sleepy-cliffs-16895.herokuapp.com/)
+
 Features
 -------
 * Dynamic retrieval of champions and their stats from Riot's API, automatically updating as the API updates.
