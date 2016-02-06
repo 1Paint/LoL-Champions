@@ -1,4 +1,4 @@
-<div class="roles-pills"> 
+<div> 
   <ul class="nav nav-pills nav-justified white roles">
     <li class="active"><a class="white" data-toggle="tab" href="#All">All</a></li>
     <li><a class="white roles" data-toggle="tab" href="#Assassin">Assassin</a></li>
@@ -8,11 +8,11 @@
     <li><a class="white roles" data-toggle="tab" href="#Support">Support</a></li>
     <li><a class="white roles" data-toggle="tab" href="#Tank">Tank</a></li>
   </ul>
-</div>
-<div class="tab-content">
-  <% @types = ["All", "Assassin", "Fighter", "Mage", "Marksman", "Support", "Tank"] %>
-  <% @types.each do |type| %>
-    <% @type = type %>
-    <%= render 'champs_grid' %>
-  <% end %>
+  <div class="tab-content">
+    <% @types = ["All", "Assassin", "Fighter", "Mage", "Marksman", "Support", "Tank"] %>
+    <% @types.each do |type| %>
+      <% @type = type %>
+      <%= render 'champs_grid' %>
+    <% end %>
+  </div>
 </div>
