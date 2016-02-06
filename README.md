@@ -16,13 +16,13 @@ Features
 Desktop & Mobile/Tablet Previews
 -------
 ### Homepage
-<img src="http://i.imgur.com/Q3O4SzT.png" width="600">&nbsp;<img src="http://i.imgur.com/Q4ZzyuS.png" width="215">
+<img src="http://i.imgur.com/Q3O4SzT.png" width="600">&nbsp;<img src="http://i.imgur.com/IcgKDC3.png" width="215">
 ### Champion Stats
-<img src="http://i.imgur.com/aflJHv9.png" width="600">&nbsp;<img src="http://i.imgur.com/Bpakv0e.png" width="215">
+<img src="http://i.imgur.com/aflJHv9.png" width="600">&nbsp;<img src="http://i.imgur.com/IehIA7G.png" width="215">
 ### Champion Abilities
-<img src="http://i.imgur.com/gIRZvX1.png" width="600">&nbsp;<img src="http://i.imgur.com/UQtBVZ8.png" width="215">
+<img src="http://i.imgur.com/gIRZvX1.png" width="600">&nbsp;<img src="http://i.imgur.com/CNhLb5G.png" width="215">
 ### Champion Index with Sortable Stats
-<img src="http://i.imgur.com/i76oDoL.png" width="600">&nbsp;<img src="http://i.imgur.com/TpZ4v5i.png" width="215">
+<img src="http://i.imgur.com/i76oDoL.png" width="600">&nbsp;<img src="http://i.imgur.com/FWX6zJx.png" width="215">
 
 Possible Future Updates
 -------
