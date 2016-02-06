@@ -1,6 +1,8 @@
 Champions
 =======
 
+A web app displaying League of Legends champion stats and abilities.
+
 Features
 -------
 * Dynamic retrieval of champions and their stats from Riot's API, automatically updating as the API updates.
