@@ -28,6 +28,7 @@ Possible Future Updates
 * Create an item/runes/masteries database.
 * Create a feature to theory-craft by allowing users to add items/runes/masteries and see corresponding changes to champion stats abilities.
 * Add a more robust set of tests and champion attribute validations.
+* Make all the homepage filter tabs the same size.
 
 Shoutouts
 -------
