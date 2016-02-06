@@ -6,6 +6,7 @@ Features
 * Dynamic retrieval of champions and their stats from Riot's API, automatically updating as the API updates.
 * Homepage of filterable champions.
 * An index page with champion filtering and a table of sortable stats&mdash;from general stats to level 1 and level 18 stats.
+* Responsive and visually pleasing layouts for desktop and mobile views.
 * Dynamic retrieval of missing/misplace API champion ability data (takes a few seconds to process all champion abilities and load the page. A possible future update will make the page static and only update when the API updates).
 
 Desktop & Mobile/Tablet Previews
