@@ -16,6 +16,7 @@ class StaticsController < ApplicationController
       
       @roles_hash[:All] << [champ_name, champ_name_id]
       @roles_hash["#{Champion.find_by(champ_name_id: champ_name_id).primary}".to_sym] << [champ_name, champ_name_id]
+      # Sort champions by name.
       @roles_hash.each do |key, array|
         @roles_hash[key] = @roles_hash[key].sort
       end
