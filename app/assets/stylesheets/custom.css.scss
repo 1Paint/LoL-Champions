@@ -626,6 +626,34 @@ p.missingdata {
 }
 
 /*******************************************************/
+/************************ items ************************/
+/*******************************************************/
+
+div.item-box {
+  margin: 20px;
+}
+
+img.item {
+  float: left;
+  overflow: hidden;
+  margin-right: 20px;
+}
+
+h2.item-name {
+  margin-top: 0px;
+  margin-bottom: 5px;
+}
+
+div.jumbotron p.item-total-cost {
+  color: yellow;
+}
+
+div.jumbotron p.item-description {
+  clear: left;
+  padding-top: 20px;
+}
+
+/*******************************************************/
 /*********************** contact ***********************/
 /*******************************************************/
 

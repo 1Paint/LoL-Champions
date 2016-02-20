@@ -1,0 +1,13 @@
+<h1 style="color:white">Summoner's Rift Items</h1>
+<div class="container">
+  <% @item_ids.each do |item_id, item_info| %>
+    <% if item_info['maps']['11'] == true #current summoner's rift %>
+      <div class="jumbotron item-box col-md-5">
+        <img class="item" src=<%= "http://ddragon.leagueoflegends.com/cdn/6.3.1/img/item/#{item_id}.png" %> />
+        <h2 class="item-name" ><%= item_info['name'] %></h2>
+        <p class="item-total-cost"><%= item_info['gold']['total'] %> gold</p>
+        <p class="item-description" ><%= item_info['description'].html_safe %></p>
+      </div>
+    <% end %>
+  <% end %>
+</div>
