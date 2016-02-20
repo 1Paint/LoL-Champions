@@ -238,13 +238,6 @@ html {
   }
 }
 
-li.version {
-  font-size: 12px;
-  overflow: hidden;
-  color: white;
-  margin-left: 10px;
-}
-
 #nav {
   top: 0;
 }
@@ -290,6 +283,13 @@ footer {
       float: left;
     }
   }
+}
+
+li.version {
+  font-size: 12px;
+  overflow: hidden;
+  color: white;
+  margin-left: 15px;
 }
 
 /*******************************************************/
