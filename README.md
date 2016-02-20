@@ -16,9 +16,9 @@ Features
 Desktop & Mobile/Tablet Previews
 -------
 ### Homepage
-<img src="http://i.imgur.com/Q3O4SzT.png" width="600">&nbsp;<img src="http://i.imgur.com/IcgKDC3.png" width="207">
+<img src="http://i.imgur.com/TdV8ch7.png" width="600">&nbsp;<img src="http://i.imgur.com/IcgKDC3.png" width="207">
 ### Champion Stats
-<img src="http://i.imgur.com/aflJHv9.png" width="600">&nbsp;<img src="http://i.imgur.com/IehIA7G.png" width="207">
+<img src="http://i.imgur.com/CLP1Sgg.png" width="600">&nbsp;<img src="http://i.imgur.com/IehIA7G.png" width="207">
 ### Champion Abilities
 <img src="http://i.imgur.com/gIRZvX1.png" width="600">&nbsp;<img src="http://i.imgur.com/CNhLb5G.png" width="207">
 ### Champion Index with Sortable Stats
