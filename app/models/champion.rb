@@ -244,7 +244,7 @@ class Champion < ActiveRecord::Base
       
       # If spell value doesn't already exist, input it into the spell_values
       # hash. Conditional needed because spell values already exist for bug fixes. 
-      if @spell_values["{{ #{key} }}"][0..1] == "**"  # **Missing/Misplaced API Data**
+      if @spell_values["{{ #{key} }}"][0..1] == "**"  # **Missing/Misplaced API Data** --- default value indicating nonexistence.
         @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
       end
     end
@@ -279,10 +279,18 @@ class Champion < ActiveRecord::Base
     coeff = hash['coeff']
     value_type = hash['link']
     
+    # Turn single digit into an array of length 1.
+    if coeff.is_a? Float
+      coeff = [coeff]
+    end
+    coeff = coeff.join("/")  # [1, 2, 3] --> "1/2/3"
+    
     if value_type == "@text"  # 9
       value_type = ""
+      @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
     elsif value_type == "@cooldownchampion"  # 5
       value_type = ""
+      @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
       
     elsif value_type[0..7] == "@dynamic"
       if value_type == "@dynamic.abilitypower"  # 4
@@ -295,13 +303,7 @@ class Champion < ActiveRecord::Base
       #             Rengar Bug-fix            #
       #---------------------------------------#
       # Bug: coeff for 'Q' is not in an array.
-      # Turn single digit into an array of length 1.
-      if coeff.is_a? Float
-        coeff = [coeff]
-      end
-      
-      # [1, 2, 3] --> "1/2/3"
-      coeff = coeff.join("/")
+
       # (+/-) indicating scaling direction.
       dyn = hash['dyn']
       # Text description lacks parentheses so must make separate string.
