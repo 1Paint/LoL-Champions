@@ -139,7 +139,7 @@ class Champion < ActiveRecord::Base
                           max: @stat[:attackrange].round(0) } }
     
     # List champion resource if Mana-less or Energy-less.
-    # All champion resources used in the game can be found by running test/scripts/get_champ_resources.rb
+    # All champion resources used in the game can be found by running lib/scripts/get_champ_resources.rb
     if @resource != "Mana" && @resource != "MP" && @resource != "Energy"
       @stat_range.delete(:mpregen)
       
@@ -211,7 +211,7 @@ class Champion < ActiveRecord::Base
       
       # Replace JSON value type names with proper English.
       # All value types (spell resources) and their frequencies can be found by
-      # running 'test/scripts/get_all_vars_types.rb'. The following conditionals
+      # running 'lib/scripts/get_all_vars_types.rb'. The following conditionals
       # check the most frequent normal value types first, followed by special
       # value types. Frequencies shown to the right of conditionals.
       if value_type == "spelldamage"  # 374
@@ -443,7 +443,7 @@ end
 ####################################################
 # Replace JSON value type names with proper English.
 # All value types (spell resources) and their frequencies can be found by
-# running 'test/scripts/get_all_vars_types.rb'. The following conditionals
+# running 'lib/scripts/get_all_vars_types.rb'. The following conditionals
 # check the most frequent normal value types first, followed by special
 # value types (dynamic-scaling abiltiies).
 
