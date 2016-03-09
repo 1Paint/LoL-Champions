@@ -46,7 +46,7 @@ class ApplicationController < ActionController::Base
       # Get the champion's general and detailed stats.
       champion.get_stats(@champ_name_id)
       champion.get_stats_ranges(@champ_name_id)
-      # Get the champion's priary and secondary roles.
+      # Get the champion's primary and secondary roles.
       champion.get_roles(champion, @data)
       
       # Update the champion's general stats and version #.
@@ -65,5 +65,5 @@ class ApplicationController < ActionController::Base
                         "#{stat}max".to_sym => values[:max])
       end
     end # End iteration through each champion.
-  end
+  end # Finish updating.
 end
