@@ -14,6 +14,7 @@ class StaticsController < ApplicationController
       champ_name_id = info['id']  # Champion name ID, e.g. KhaZix, MasterYi
       champ_name = info['name']   # Champion name, e.g. Kha'Zix, Master Yi
       
+      # Store champions in their respective roles---used to enable filtering.
       @roles_hash[:All] << [champ_name, champ_name_id]
       @roles_hash["#{Champion.find_by(champ_name_id: champ_name_id).primary}".to_sym] << [champ_name, champ_name_id]
       # Sort champions by name.
