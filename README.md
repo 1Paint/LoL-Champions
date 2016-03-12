@@ -11,7 +11,7 @@ Features
 * Homepage of champions filterable by role.
 * An index page of champions filterable by role and a table of sortable stats&mdash;from general stats to level 1 and level 18 stats.
 * Responsive and aesthetic layouts for desktop and mobile views.
-* Dynamic retrieval of missing/misplace API champion ability data (takes a few seconds to process all champion abilities and load the page. A possible future update will make the page static and only update when the API updates).
+* Dynamic retrieval of missing/misplaced API champion ability data (takes a few seconds to process all champion abilities and load the page. A possible future update will make the page static and only update when the API updates).
 
 Desktop & Mobile/Tablet Previews
 -------
