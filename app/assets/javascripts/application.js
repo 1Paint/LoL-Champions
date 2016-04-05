@@ -17,4 +17,5 @@
 //= require jquery.metadata
 //= require jquery.tablesorter.min
 //= require bootstrap.min
+//= require slick.min
 //= require_tree .

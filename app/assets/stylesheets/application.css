@@ -11,5 +11,7 @@
  * file per style scope.
  *
  *= require bootstrap.min
+ *= require slick
+ *= require slick-theme
  *= require_tree .
  */
