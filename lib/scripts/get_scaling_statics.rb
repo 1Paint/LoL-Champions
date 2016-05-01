@@ -1,3 +1,5 @@
+# Find all champions whose ranges, cooldowns, or costs scale with stats.
+
 require 'httparty'
 
 # Obtain all champions.
@@ -10,7 +12,6 @@ range_info = ['---ranges---']
 cost_info = ['---costs---']
 resource_info = ['---resources---']
 
-# Find all champions whose ranges, cooldowns, or costs scale with stats.
 champions['data'].each do |champ, info|   
   champ_name_id = info['id'] 
 

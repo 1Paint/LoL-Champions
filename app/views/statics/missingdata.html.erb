@@ -1,11 +1,25 @@
-<p class="note">An empty set of values is a set of values that has been removed due to redundancy, e.g. "...increased by 200% ({{ fX }})" where fX used to be "2.0" but was removed.</p>
-<p class="note">A missing set of values is a set of missing information such as base damages or scaling values, e.g. 2 sets of missing data for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.</p>
+<p class="note">A missing set of values is a set of missing information such as base damages or scaling numbers.<br>
+  For example, there are 2 sets of missing values for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.</p><br><br>
 
-<% @champion.missing_data.each do |champ_name, data| %>
-  <% if !data.empty? %>
-    <h3 class="missingdata"><%= champ_name %></h3>
-    <% data.each do |line| %>
-      <p class="missingdata"><%= line %></p>
+<% Champion.order(:champ_name_id).each do |champ| %>
+  <% buttons = ['Q', 'W', 'E', 'R'] %>
+  <% missing_data = [champ[:missing_q],
+                     champ[:missing_w],
+                     champ[:missing_e],
+                     champ[:missing_r]] %>
+  <% if missing_data.count(nil) != 4 or champ[:bad_passive] == true %>
+    <h3 class="missingdata"><a href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></h3>
+    
+    <% if champ[:bad_passive] == true %>
+      <p class="missingdata"><%= "Passive description is missing." %></p>
     <% end %>
+    
+    <% for i in 0..3 %>
+      <% if missing_data[i] != nil %>
+        <p class="missingdata"><%= "#{buttons[i]} is missing #{missing_data[i]} set(s) of values." %></p>
+      <% end %>
+    <% end %>
+    <br>
+    
   <% end %>
 <% end %>

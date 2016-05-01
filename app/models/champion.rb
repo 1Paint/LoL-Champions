@@ -58,16 +58,22 @@ class Champion < ActiveRecord::Base
     get_stats_ranges(champ_name_id)
     
     # Passive info.
-    @passive = @data['data'][@champ_name_id]['passive']['name']
-    passive_img_name = @data['data'][@champ_name_id]['passive']['image']['full']
-    @passive_img_url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/passive/#{passive_img_name}"
-    @passive_description = @data['data'][@champ_name_id]['passive']['description']
+    get_passive_info(@data, champ_name_id, current_version)
     
     # Retrieve spells info. Parameters: (Keys Q,W,E,R corresponding to 0,1,2,3) 
     get_spell(:q, 0)
     get_spell(:w, 1)
     get_spell(:e, 2)
     get_spell(:r, 3)
+  end
+  
+  # Get champion passive ability information.
+  # 'data' is the champion JSON file.
+  def get_passive_info(data, champ_name_id, current_version)
+    @passive = data['data'][champ_name_id]['passive']['name']
+    passive_img_name = data['data'][champ_name_id]['passive']['image']['full']
+    @passive_img_url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/img/passive/#{passive_img_name}"
+    @passive_description = data['data'][champ_name_id]['passive']['description']
   end
   
   # Retrieve champion stats such as HP, attack, defense, etc.
@@ -360,73 +366,53 @@ class Champion < ActiveRecord::Base
     end
   end
   
-  def get_missing_data(current_version)
+  # Get the number of missing data for abilities of a given champion.
+  def get_missing_data(current_version, champ_name_id)
     @current_version = current_version
+    @champ_name_id = champ_name_id
     
     initialize_spells
     
-    # Storage of missing data.
-    @missing_data = Hash.new
+    # Storage of missing data. Will end up looking like [2, nil, 1, nil].
+    # This indicates that for the champion in question, there are 2 missing
+    # values for Q, none for W, 1 for E, and none for R.
+    @missing_data = []
 
-    # Get all champions.
-    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
-    response = HTTParty.get(url)
-    champions = response.parsed_response
-    
     @buttons = { q: 0, w: 1, e: 2, r: 3 }
     
-    # Find which champions have missing API data.
-    champions['data'].each do |champ, info|
-      @champ_name_id = info['id']
-      @champ_name = info['name']
-      @missing_data[@champ_name] = []
+    # Get champion data.
+    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
+    response = HTTParty.get(url)
+    @data = response.parsed_response
+    
+    # Get missing data for each ability.
+    @buttons.each do |button, num|
+      # Get spell name, image, description.
+      get_spell(button, num)
+       
+      # Spell resource.
+      resource = @data['data'][@champ_name_id]['spells'][num]['resource']
+      @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
       
-      url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
-      response = HTTParty.get(url)
-      @data = response.parsed_response
+      # Get number of missing values.
+      num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
+      num_missing_data += @spell_cost[button].scan("**Missing/Misplaced API Data**").count
       
-      @buttons.each do |button, num|
-        get_spell(button, num)
-        
+      # For champions with secondary spells.
+      if !@data['data'][@champ_name_id]['spells'][num+4].nil?
         # Spell resource.
-        resource = @data['data'][@champ_name_id]['spells'][num]['resource']
-        @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
+        resource = @data['data'][@champ_name_id]['spells'][num+4]['resource']
+        @spell_cost["#{button}2".to_sym] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
         
-        # Empty values showing up as ().
-        num_empty_data = @spell_description[button].scan("(**Missing/Misplaced API Data**)").count
-        num_empty_data += @spell_cost[button].scan("(**Missing/Misplaced API Data**)").count
+        # Get number of missing values for secondary abilities.
+        num_missing_data += @spell_description["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
+        num_missing_data += @spell_cost["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
+      end
         
-        # Missing values showing up as (+)
-        num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
-        num_missing_data += @spell_cost[button].scan("**Missing/Misplaced API Data**").count
-        
-        # For champions with secondary spells.
-        if !@data['data'][@champ_name_id]['spells'][num+4].nil?
-          # Spell resource.
-          resource = @data['data'][@champ_name_id]['spells'][num+4]['resource']
-          @spell_cost["#{button}2".to_sym] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
-          
-          # Empty values showing up as ().
-          num_empty_data += @spell_description["#{button}2".to_sym].scan("(**Missing/Misplaced API Data**)").count
-          num_empty_data += @spell_cost["#{button}2".to_sym].scan("(**Missing/Misplaced API Data**)").count
-          
-          # Missing values showing up as (+)
-          num_missing_data += @spell_description["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
-          num_missing_data += @spell_cost["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
-        end
-        
-        # Find number of empy data for each champion.
-        if num_empty_data != 0
-          @missing_data[@champ_name].concat(["#{button.upcase} has #{num_empty_data} empty set(s) of values"])
-          
-          # Taking care of redundancy.
-          num_missing_data -= 1
-          if num_missing_data != 0
-            @missing_data[@champ_name].concat(["#{button.upcase} is missing #{num_missing_data} set(s) of values"])
-          end
-        elsif num_missing_data != 0
-          @missing_data[@champ_name].concat(["#{button.upcase} is missing #{num_missing_data} set(s) of values"])
-        end
+      if num_missing_data != 0
+        @missing_data << num_missing_data
+      else
+        @missing_data << nil
       end
     end
   end

@@ -1,4 +1,4 @@
-# Get the colors used for each spell of each champion.
+# Get all champions with BadDesc passives.
 
 current_version = "6.9.1"
 
@@ -9,7 +9,7 @@ url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/cham
 response = HTTParty.get(url)
 champions = response.parsed_response
 
-colors_hash = Hash.new
+bad_passive_champs = []
 
 champions['data'].each do |champ, info|   
   champ_name_id = info['id'] 
@@ -18,17 +18,13 @@ champions['data'].each do |champ, info|
   response = HTTParty.get(url)
   data = response.parsed_response
   
-  for i in 0..3
-    spell_description = data['data'][champ_name_id]['spells'][i]['tooltip']
-    colors_array = []
-    colors_array = spell_description.scan(/color\h{3,6}/)
-    colors_array.each do |color|
-      colors_hash[color] = true
-    end
+  passive_description = data['data'][champ_name_id]['passive']['description']
+  if passive_description == "BadDesc"
+    bad_passive_champs << champ_name_id
   end
 end
 
-# Print out all colors for use in CSS.
-colors_hash.each do |color, bool|
-  puts ".#{color} {\n\s color: ##{color[5..-1]};\n}"
+# List all champions resources and frequency of each.
+bad_passive_champs.each do |champ|
+  puts champ
 end

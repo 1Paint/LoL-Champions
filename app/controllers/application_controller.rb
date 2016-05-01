@@ -8,7 +8,8 @@ class ApplicationController < ActionController::Base
     url = "https://ddragon.leagueoflegends.com/api/versions.json"
     response = HTTParty.get(url)
     data = response.parsed_response
-    @current_version = data[0]
+    # @current_version = data[0]
+    @current_version = "6.8.1"
 
     # If the version has changed, update all champions and their stats.
     if Champion.first.version != @current_version
@@ -57,12 +58,32 @@ class ApplicationController < ActionController::Base
                       primary: champion.primary_role,
                       secondary: champion.secondary_role,
                       version: @current_version)
+                      
       # Update the champion's detailed stats (stats at levels 1 and 18).
       # These stats include hp, hpregen, mp, mpregen, movespeed, armor, 
       # spellblock, attackdamage, attackspeed, and attackrange.
       champion.stat_range.each do |stat, values|
         champion.update("#{stat}min".to_sym => values[:min],
                         "#{stat}max".to_sym => values[:max])
+      end
+      
+      # Find and update number of missing data for champion abilities.
+      champion.get_missing_data(@current_version, @champ_name_id)
+      champion.update(missing_q: champion.missing_data[0],
+                      missing_w: champion.missing_data[1],
+                      missing_e: champion.missing_data[2],
+                      missing_r: champion.missing_data[3])
+                      
+      # Find if the champion has a bad passive description.
+      url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
+      response = HTTParty.get(url)
+      champ_data = response.parsed_response
+      
+      champion.get_passive_info(champ_data, @champ_name_id, @current_version)
+      if champion.passive_description == "BadDesc"
+        champion.update(bad_passive: true)
+      else
+        champion.update(bad_passive: false)
       end
     end # End iteration through each champion.
   end # Finish updating.

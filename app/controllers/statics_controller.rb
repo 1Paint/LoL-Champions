@@ -28,7 +28,5 @@ class StaticsController < ApplicationController
   end
   
   def missingdata
-    @champion = Champion.new
-    @champion.get_missing_data(@current_version)
   end
 end

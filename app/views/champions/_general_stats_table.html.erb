@@ -14,8 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <% Champion.order(:champ_name_id) %>
-      <% Champion.all.each do |champ| %>
+      <% Champion.order(:champ_name_id).each do |champ| %>
       <tr>
         <td class="col-md-1 name <%= champ[:primary] %>"><a class="name" href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></td>
         <td class="col-md-1 attack"><%= champ[:attack] %></td>

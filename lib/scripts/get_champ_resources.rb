@@ -1,3 +1,5 @@
+# Get the resource of each champion.
+
 require 'httparty'
 
 # Obtain all champions.
@@ -7,7 +9,6 @@ champions = response.parsed_response
 
 resource_hash = Hash.new
 
-# Get the resource of each champion.
 champions['data'].each do |champ, info|   
   champ_name_id = info['id'] 
 

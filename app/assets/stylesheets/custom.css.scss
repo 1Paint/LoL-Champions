@@ -18,15 +18,21 @@ $purple: #6f5499;
 }
 
 //----------------------------------//
-//          colors from API         //
+//   colors used in descriptions   //
 //----------------------------------//
 
-
+// colors obtained by running lib/scripts/get_spell_colors.rb
 .colorF88017 {
   color: #F88017;
 }
 .colorFF9900 {
   color: #FF9900;
+}
+.colore60000 {
+  color: #e60000;
+}
+.color9900ff {
+  color: #9900ff;
 }
 .colorCC3300 {
   color: #CC3300;
@@ -39,6 +45,15 @@ $purple: #6f5499;
 }
 .colorFFFFFF {
   color: #FFFFFF;
+}
+.colorFFEB7F {
+  color: #FFEB7F;
+}
+.color308BDB {
+  color: #308BDB;
+}
+.coloreeeeee {
+  color: #eeeeee;
 }
 .colorEED6AF {
   color: #EED6AF;
@@ -61,11 +76,8 @@ $purple: #6f5499;
 .colorFF00FF {
   color: #FF00FF;
 }
-.color6655CC {
-  color: #6655CC;
-}
-.color44DDFF {
-  color: #44DDFF;
+.color32CD32 {
+  color: #32CD32;
 }
 .color9999A8 {
   color: #9999A8;
@@ -109,6 +121,12 @@ $purple: #6f5499;
 .colorcccccc {
   color: #cccccc;
 }
+.colorFF5802 {
+  color: #FF5802;
+}
+.color44DDFF {
+  color: #44DDFF;
+}
 .color00DD33 {
   color: #00DD33;
 }
@@ -142,8 +160,14 @@ $purple: #6f5499;
 .colorBB77FF {
   color: #BB77FF;
 }
+.color919191 {
+  color: #919191;
+}
 .colorFFE076 {
   color: #FFE076;
+}
+.colorDDDDDD {
+  color: #DDDDDD;
 }
 .color0bf7de {
   color: #0bf7de;
@@ -156,6 +180,18 @@ $purple: #6f5499;
 }
 .colorFFD700 {
   color: #FFD700;
+}
+.color99ff99 {
+  color: #99ff99;
+}
+.colorFFB3B3 {
+  color: #FFB3B3;
+}
+.color6655CC {
+  color: #6655CC;
+}
+.colorD41919 {
+  color: #D41919;
 }
 
 /*******************************************************/
@@ -616,7 +652,7 @@ p.note {
 h3.missingdata {
   font-size: 30px;
   color: white;
-  margin-bottom: 0px;
+  margin: 0px;
 }
 
 p.missingdata {
