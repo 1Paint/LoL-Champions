@@ -1,9 +1,11 @@
 # Find all champions whose ranges, cooldowns, or costs scale with stats.
 
+current_version = "6.9.1"
+
 require 'httparty'
 
 # Obtain all champions.
-url = "http://ddragon.leagueoflegends.com/cdn/6.1.1/data/en_US/champion.json"
+url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/champion.json"
 response = HTTParty.get(url)
 champions = response.parsed_response
 
@@ -15,7 +17,7 @@ resource_info = ['---resources---']
 champions['data'].each do |champ, info|   
   champ_name_id = info['id'] 
 
-  url = "http://ddragon.leagueoflegends.com/cdn/6.1.1/data/en_US/champion/#{champ_name_id}.json"
+  url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/champion/#{champ_name_id}.json"
   response = HTTParty.get(url)
   data = response.parsed_response
   

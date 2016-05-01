@@ -1,4 +1,8 @@
+# NOT WORKING.
+
 require 'httparty'
+
+@current_version = "6.9.1"
 
 # Copied from champion.rb in models.
 class ChampionTest
@@ -7,7 +11,7 @@ class ChampionTest
   def get_spell(button, num, champ_name_id)
     @champ_name_id = champ_name_id
     
-    url = "http://ddragon.leagueoflegends.com/cdn/6.1.1/data/en_US/champion/#{@champ_name_id}.json"
+    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
     response = HTTParty.get(url)
     @data = response.parsed_response
 
