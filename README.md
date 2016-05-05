@@ -31,6 +31,7 @@ Possible Future Updates
 * Enable a way to filter champions by their secondary roles.
 * Create an item/runes/masteries database.
 * Create a feature to theory-craft by allowing users to add items/runes/masteries and see corresponding changes to champion stats abilities.
+
 ### Code
 * Add a more robust set of tests and champion attribute validations.
 * The homepage currently renders every champion twice&mdash;once for the 'All' tab and once for the tab corresponding to their primary role. Use jQuery to render and filter the champions dynamically.
