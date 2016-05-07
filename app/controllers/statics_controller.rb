@@ -1,18 +1,13 @@
 class StaticsController < ApplicationController
-  before_action :check_version  # from application_contoller.rb
+  before_action :set_current_version  # from application_contoller.rb
   
   def home
     @roles_hash = Hash.new { |h, k| h[k] = [] }
     
-    # Get all champion name IDs and names.
-    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
-    response = HTTParty.get(url)
-    data = response.parsed_response
-    
     # Store all champion name IDs and names---used to generate images and links.
-    data['data'].each do |champ, info|
-      champ_name_id = info['id']  # Champion name ID, e.g. KhaZix, MasterYi
-      champ_name = info['name']   # Champion name, e.g. Kha'Zix, Master Yi
+    Champion.all.each do |champ|
+      champ_name = champ.name # Champion name, e.g. Kha'Zix, Master Yi
+      champ_name_id = champ.champ_name_id # Champion name ID, e.g. KhaZix, MasterYi
       
       # Store champions in their respective roles---used to enable filtering.
       @roles_hash[:All] << [champ_name, champ_name_id]
@@ -28,5 +23,6 @@ class StaticsController < ApplicationController
   end
   
   def missingdata
+    check_version # From applications controller.
   end
 end

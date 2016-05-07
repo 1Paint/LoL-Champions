@@ -3,12 +3,27 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   
-  # Get the current Leauge of Legends API version.
-  def check_version
+  def get_versions
     url = "https://ddragon.leagueoflegends.com/api/versions.json"
     response = HTTParty.get(url)
     data = response.parsed_response
-    @current_version = data[0]
+    return data
+  end
+  
+  def set_current_version
+    @current_version = get_versions[0]
+  end
+  
+  def get_champs(current_version)
+    # Obtain current champions.
+    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
+    response = HTTParty.get(url)
+    return response.parsed_response
+  end
+  
+  # Check that we have the current Leauge of Legends API version.
+  def check_version
+    set_current_version # @current_version usable.
 
     # If the version has changed, update all champions and their stats.
     if Champion.first.version != @current_version
@@ -16,15 +31,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  # Update champion database if the version has changed.
+  # Update champion database.
   def update_version
-    # Obtain current champions
-    url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion.json"
-    response = HTTParty.get(url)
-    @data = response.parsed_response
+    @champs_list = get_champs(@current_version)
     
     # Update all champions' stats.
-    @data['data'].each do |champ, info|
+    @champs_list['data'].each do |champ, info|
       @champ_name_id = info['id']
       
       # If the champion does not exist in the database, add it.

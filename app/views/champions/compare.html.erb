@@ -1,0 +1,42 @@
+<script>
+  $(document).ready(function(){
+    $('.container-fluid').css('max-width','1920px');
+  });
+</script>
+
+<div class="champ-view">
+  <table class="champ-halves">
+    <tr>
+      <td class="half1">
+        <% @half_num = "half1" %>
+        <div class="buttons"><%= render 'dropdowns' %></div>
+        <non class="champ-info"><%= render 'champ_info' %></non>
+      </td>
+      
+      <td class="half2">
+        <% @half_num = "half2" %>
+        <div class="buttons"><%= render 'dropdowns' %></div>
+        <non class="champ-info"><%= render 'champ_info' %></non>
+      </td>
+    </tr>
+    
+    <tr>
+      <td class="half1 passive"><%= render 'passive' %></td>
+      <td class="half2 passive"><%= render 'passive' %></td>
+    </tr>
+    
+    <% @buttons = ["q", "w", "e", "r"] %>
+
+    <% @buttons.each do |button| %>
+      <tr>
+        <td class="half1 <%= button %>"><% @spell_button = button %><%= render 'spell' %></td>
+        <td class="half2 <%= button %>"><% @spell_button = button %><%= render 'spell' %></td>
+      </tr>
+    <% end %>
+    
+    <tr>
+      <td class="half1 lore"><%= render 'lore' %></td>
+      <td class="half2 lore"><%= render 'lore' %></td>
+    </tr>
+  </table>
+</div>

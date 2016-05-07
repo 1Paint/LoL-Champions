@@ -42,7 +42,7 @@ class Champion < ActiveRecord::Base
     # Create empty hashes to store champion stats (HP, attack, defense, etc).
     initialize_stats
     
-    # Get the champion JSON file and parse it.
+    # Get the champion JSON file and parse it. Available as @data.
     get_data_set(champ_name_id, current_version)
     
     # Champion info.
@@ -183,7 +183,8 @@ class Champion < ActiveRecord::Base
   # Should have this method only occur once per game version, i.e. store in
   # spell descriptions in database.
   def input_spell_values(button, num)
-    # Storage of spell values.
+    # Storage of spell values. Default "**Missing..." value for non-existing
+    # keys.
     @spell_values = Hash.new("**Missing/Misplaced API Data**")
     
     # Array of base values (e.g. effectBurn = [null, "200", "10/20/30"]).
@@ -197,14 +198,16 @@ class Champion < ActiveRecord::Base
       end
     end
     
-    # Array of hashes (e.g. vars = [{a: 3}, {b: 4}, {c: 5}]).
+    # Array of hashes.
     # Hashes store values such as { "link" => "spelldamage",
     #                               "coeff" => 0.6,
     #                               "key" => a1 }
-    # Example: "0.6 ability power" replaces "{{ a1 }}".
+    # Using that example, we have a spelldamage ratio of 0.6. So, we replace
+    # "{{ a1 }}" with "0.6 ability power".
     vars = @data['data'][@champ_name_id]['spells'][num]['vars']
     
-    # Store aX and fX values with corresponding values (e.g. a1: "12/24/36/48/60").
+    # Store aX and fX values with corresponding values.
+    # e.g. a1: "12/24/36/48/60".
     vars.each do |hash|          # static        | dynamic
       key = hash['key']          # "aX"          | "aX"
       coeff = hash['coeff']      # 0.2           | [0.2, 0.4, 0.6]
@@ -249,7 +252,8 @@ class Champion < ActiveRecord::Base
       fix_special_value_types(hash)
       
       # If spell value doesn't already exist, input it into the spell_values
-      # hash. Conditional needed because spell values already exist for bug fixes. 
+      # hash. Conditional needed because spell values already exist for bug 
+      # fixes. 
       if @spell_values["{{ #{key} }}"][0..1] == "**"  # **Missing/Misplaced API Data** --- default value indicating nonexistence.
         @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
       end
@@ -257,23 +261,27 @@ class Champion < ActiveRecord::Base
     
     @spell_cooldown[button] = @data['data'][@champ_name_id]['spells'][num]['cooldownBurn']
     
-    # Description for spell, which includes base damage numbers and damage scaling (e.g. +60% bonus AD).
+    # Description for spell, which includes base damage numbers and damage
+    # scaling (e.g. +60% bonus AD).
     @spell_description[button] = @data['data'][@champ_name_id]['spells'][num]['tooltip']
     
-    # Substitute spell values into spell descriptions, replacing all "{{ eX }}" and similar.
+    # Substitute spell values into spell descriptions, replacing all "{{ eX }}"
+    # and similar.
     @spell_description[button] = @spell_description[button].gsub(/{{(.*?)}}/, @spell_values)
-    
-    # # Remove empty values---values showing up as "()". The values seem to have
-    # # been removed because they were redundant.
-    # @spell_description[button] = @spell_description[button].gsub("(*API DATA MISSING/MISPLACED*)", "")
     
     # Find the costs and resources used for the spell.
     # e.g. cost = "10/20/30/40/50"
-    # e.g. resource = "{{ cost }} Mana, {{ e2 }} Focus"
+    # e.g. resource = "{{ cost }} Mana", "{{ e2 }} Focus"
+    # e.g. cost_type = "Mana", "Focus"
     cost = @data['data'][@champ_name_id]['spells'][num]['costBurn']
     resource = @data['data'][@champ_name_id]['spells'][num]['resource']
+    cost_type = @data['data'][@champ_name_id]['spells'][num]['costType']
     
-    # Substitute spell values into spell descriptions, replacing all "{{ eX }}" and similar.
+    if !resource.include? "{{"
+      @spell_cost[button] = cost+" "+cost_type
+    end
+    # Substitute spell cost and resource values into spell descriptions,
+    # replacing all "{{ eX }}" and similar.
     @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
     @spell_cost[button] = @spell_cost[button].gsub("{{ cost }}", cost)
   end

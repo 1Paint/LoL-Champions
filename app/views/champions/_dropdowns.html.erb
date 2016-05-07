@@ -1,0 +1,96 @@
+<!--Select champion.-->
+<div class="btn-group btn-champs <%= @half_num %>">
+  <% champs_list_sorted = [] %>
+  <% @champs_list['data'].each do |champ, info| %>
+    <% name = info['name'] %>
+    <% name_id = info['id'] %>
+    <% champs_list_sorted << [name, name_id] %>
+  <% end %>
+  <% champs_list_sorted = champs_list_sorted.sort %>
+  
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= champs_list_sorted[0][0] %> <span class="caret"></span>
+  </button>
+  <p class="champ_id" hidden><%= champs_list_sorted[0][1] %></p>
+  <ul class="dropdown-menu dropdown-menu-right scrollable-menu <%= @half_num %>" role="menu">
+    <% champs_list_sorted.each do |name_and_id| %>
+      <li>
+        <a class="champ" href='#'><%= name_and_id[0] %></a>
+        <p hidden><%= name_and_id[1] %></p>
+      </li>
+    <% end %>  
+  </ul>
+</div>
+
+<!--Select game version.-->
+<div class="btn-group btn-versions <%= @half_num %>">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <%= @versions_list[0] %> <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right scrollable-menu <%= @half_num %>" role="menu">
+    <% @versions_list.each do |version| %>
+      <li><a class="version" href='#'><%= version %></a></li>
+    <% end %>  
+  </ul>
+</div>
+
+<script>
+  $.ajaxSetup({'cache': true});
+  
+  $(".<%= @half_num %> li a.champ").click(function(){
+    $(this).champ_change();
+  });
+  $(".<%= @half_num %> li a.version").click(function(){
+    $(this).version_change();
+  });
+  
+  (function($){
+    $.fn.champ_change = function() {
+      var champ_name_id = $(this).closest("li").find("p").text();
+      var selText = $(this).text();
+      $(this).parents(".btn-group").find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+      
+      if ($(this).closest("ul").hasClass("half1")) {
+        var half_num = "half1";
+      } else {
+        var half_num = "half2";
+      }
+      
+      $("div.btn-champs."+half_num+" p.champ_id").html(champ_name_id);
+      
+      var version = $("div.btn-versions."+half_num+" .btn").text()
+      version = version.replace(/\s+/g, ' ').trim();
+      
+      $.ajax({
+         url: "champions/"+champ_name_id,
+         data: { half_num: half_num,
+                 version: version },
+         dataType: "script"
+      });
+    };
+  }(jQuery));
+  
+  (function($){
+    $.fn.version_change = function() {
+      var version = $(this).text();
+      var selText = $(this).text();
+      $(this).parents(".btn-group").find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+      
+      if ($(this).closest("ul").hasClass("half1")) {
+        var half_num = "half1";
+      } else {
+        var half_num = "half2";
+      }
+      
+      var champ_name_id = $("div.btn-champs."+half_num+" p.champ_id").text()
+      champ_name_id = champ_name_id.replace(/\s+/g, ' ').trim();
+      
+      $.ajax({
+         url: "champions/"+champ_name_id,
+         data: { half_num: half_num,
+                 version: version },
+         dataType: "script"
+      });
+    };
+  }(jQuery));
+</script>

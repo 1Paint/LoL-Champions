@@ -1,0 +1,10 @@
+$("div.champ-view").fadeOut(function() {
+  $("td.<%= @half_num %> non.champ-info").html("<%= escape_javascript(render "champ_info") %>");
+  $("td.<%= @half_num %>.passive").html("<%= escape_javascript(render "passive") %>");
+  $("td.<%= @half_num %>.q").html("<% escape_javascript(@spell_button = "q") %><%= escape_javascript(render "spell") %>");
+  $("td.<%= @half_num %>.w").html("<% escape_javascript(@spell_button = "w") %><%= escape_javascript(render "spell") %>");
+  $("td.<%= @half_num %>.e").html("<% escape_javascript(@spell_button = "e") %><%= escape_javascript(render "spell") %>");
+  $("td.<%= @half_num %>.r").html("<% escape_javascript(@spell_button = "r") %><%= escape_javascript(render "spell") %>");
+  $("td.<%= @half_num %>.lore").html("<%= escape_javascript(render "lore") %>");
+  $("div.champ-view").fadeIn();
+});

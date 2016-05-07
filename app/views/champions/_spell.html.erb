@@ -4,13 +4,13 @@
       <img src=<%= @champion.spell_img_url[@spell_button.to_sym] %> />
     </div>
     <div class="spell-dynamics">
-      <h2 class="spell-name"><%= @champion.spell_name[@spell_button.to_sym] %></h2>
-      <p class="range">Range: <%= @champion.spell_range[@spell_button.to_sym] %></p>
+      <h2 class="spell-name"><%= @champion.spell_name[@spell_button.to_sym].html_safe %></h2>
+      <p class="range">Range: <%= @champion.spell_range[@spell_button.to_sym].html_safe %></p>
     </div>
     
     <div class="spell-statics">
-      <p class="cooldown">Cooldown: <%= @champion.spell_cooldown[@spell_button.to_sym] %> seconds</p>
-      <p class="cost">Cost: <%= @champion.spell_cost[@spell_button.to_sym] %></p>
+      <p class="cooldown">Cooldown: <%= @champion.spell_cooldown[@spell_button.to_sym].html_safe %> seconds</p>
+      <p class="cost">Cost: <%= @champion.spell_cost[@spell_button.to_sym].html_safe %></p>
     </div>
   </div>
   <div class="spell-bottom">
@@ -24,13 +24,13 @@
         <img src=<%= @champion.spell_img_url["#{@spell_button}2".to_sym] %> />
       </div>
       <div class="spell-dynamics">
-        <h2 class="spell-name"><%= @champion.spell_name["#{@spell_button}2".to_sym] %></h2>
-        <p class="range">Range: <%= @champion.spell_range["#{@spell_button}2".to_sym] %></p>
+        <h2 class="spell-name"><%= @champion.spell_name["#{@spell_button}2".to_sym].html_safe %></h2>
+        <p class="range">Range: <%= @champion.spell_range["#{@spell_button}2".to_sym].html_safe %></p>
       </div>
       
       <div class="spell-statics">
-        <p class="cooldown">Cooldown: <%= @champion.spell_cooldown["#{@spell_button}2".to_sym] %> seconds</p>
-        <p class="cost">Cost: <%= @champion.spell_cost["#{@spell_button}2".to_sym] %></p>
+        <p class="cooldown">Cooldown: <%= @champion.spell_cooldown["#{@spell_button}2".to_sym].html_safe %> seconds</p>
+        <p class="cost">Cost: <%= @champion.spell_cost["#{@spell_button}2".to_sym].html_safe %></p>
       </div>
     </div>
     <div class="spell-bottom">

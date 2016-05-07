@@ -39,11 +39,11 @@
 </div>
 
 <script>
-  $("input:checkbox").click(function () {
+  $("input:checkbox").click(function(){
     var showAll = true;
     $('tr').not('.head').hide();
-    $('input[type=checkbox]').each(function () {
-      if ($(this)[0].checked) {
+    $('input[type=checkbox]').each(function(){
+      if ($(this)[0].checked){
         showAll = false;
         var value = $(this).val();            
         $('td.' + value).parent('tr').show();
@@ -53,12 +53,6 @@
       $('tr').show();
     }
   });
-</script>
 
-<script>
-  $(document).ready(function() 
-    { 
-      $("table.tablesorter").tablesorter( {sortList: [[0,0]]} ); 
-    } 
-  );  
+  $("table.tablesorter").tablesorter( {sortList: [[0,0]]} ); 
 </script>
