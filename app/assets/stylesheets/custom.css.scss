@@ -462,40 +462,6 @@ table.champs-table-general, table.champs-table-detailed {
 /******************** champion page ********************/
 /*******************************************************/
 
-div.champ-view {
-  table.champ-halves {
-    table-layout: fixed;
-    width: 100%;
-    border-spacing: 100px 0;
-    tr {
-      
-    }
-    td {
-      vertical-align: top;
-      white-space: normal;
-      div.jumbotron {
-        margin-bottom: 0px
-      }
-    }
-    td.half1, td.half2 {
-      padding: 10px;
-    }
-    td.general-stat {
-      white-space: nowrap;
-    }
-  }
-}
-
-div.buttons {
-  float: right;
-}
-
-.scrollable-menu {
-  height: auto;
-  max-height: 300px;
-  overflow-x: hidden;
-}
-
 //----------------------------------//
 //            name & stats          //
 //----------------------------------//
@@ -693,6 +659,44 @@ p.missingdata {
   font-size: 16px;
   color: white;
   margin: 0px;
+}
+
+/*******************************************************/
+/********************* compare page ********************/
+/*******************************************************/
+
+div.champ-view {
+  table.champ-halves {
+    table-layout: fixed;
+    width: 100%;
+    border-spacing: 100px 0;
+    tr {
+      
+    }
+    td {
+      vertical-align: top;
+      white-space: normal;
+      div.jumbotron {
+        margin-bottom: 0px
+      }
+    }
+    td.half1, td.half2 {
+      padding: 10px;
+    }
+    td.stat-label, td.general-stat {
+      white-space: nowrap;
+    }
+  }
+}
+
+div.buttons {
+  float: right;
+}
+
+.scrollable-menu {
+  height: auto;
+  max-height: 300px;
+  overflow-x: hidden;
 }
 
 /*******************************************************/
