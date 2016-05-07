@@ -286,6 +286,7 @@ class Champion < ActiveRecord::Base
     @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
     @spell_cost[button] = @spell_cost[button].gsub("{{ cost }}", cost)
     
+    # Versions 0.XXX do not have variables in resource text.
     if @current_version[0] == "0"
       if cost == "0"
         @spell_cost[button] = cost_type
