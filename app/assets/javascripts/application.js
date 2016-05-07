@@ -11,11 +11,11 @@
 // about supported directives.
 //
 
+//= require bootstrap.min
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
 //= require jquery.turbolinks
 //= require jquery.metadata
 //= require jquery.tablesorter.min
-//= require bootstrap.min
 //= require_tree .
