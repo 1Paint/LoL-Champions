@@ -675,16 +675,21 @@ div.champ-view {
     }
     td {
       vertical-align: top;
-      white-space: normal;
       div.jumbotron {
         margin-bottom: 0px
       }
+    }
+    td.text {
+      white-space: normal;
     }
     td.half1, td.half2 {
       padding: 10px;
     }
     td.stat-label, td.general-stat {
       white-space: nowrap;
+    }
+    h1.invalid {
+      white-space: normal;
     }
   }
 }
@@ -846,6 +851,12 @@ p.contact {
       clear: left;
       padding-left: 0px;
       float: left;
+    }
+  }
+  
+  table.champ-halves {
+    table.stats p {
+      font-size: 14px;
     }
   }
 }

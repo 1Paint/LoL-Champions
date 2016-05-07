@@ -21,22 +21,22 @@
     </tr>
     
     <tr>
-      <td class="half1 passive"><%= render 'passive' %></td>
-      <td class="half2 passive"><%= render 'passive' %></td>
+      <td class="half1 passive text"><%= render 'passive' %></td>
+      <td class="half2 passive text"><%= render 'passive' %></td>
     </tr>
     
     <% @buttons = ["q", "w", "e", "r"] %>
 
     <% @buttons.each do |button| %>
       <tr>
-        <td class="half1 <%= button %>"><% @spell_button = button %><%= render 'spell' %></td>
-        <td class="half2 <%= button %>"><% @spell_button = button %><%= render 'spell' %></td>
+        <td class="half1 text <%= button %>"><% @spell_button = button %><%= render 'spell' %></td>
+        <td class="half2 text <%= button %>"><% @spell_button = button %><%= render 'spell' %></td>
       </tr>
     <% end %>
     
     <tr>
-      <td class="half1 lore"><%= render 'lore' %></td>
-      <td class="half2 lore"><%= render 'lore' %></td>
+      <td class="half1 lore text"><%= render 'lore' %></td>
+      <td class="half2 lore text"><%= render 'lore' %></td>
     </tr>
   </table>
 </div>

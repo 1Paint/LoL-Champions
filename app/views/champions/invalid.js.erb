@@ -1,5 +1,5 @@
 $("div.champ-view").fadeOut(function() {
-  $("td.<%= @half_num %> non.champ-info").html('<div class="jumbotron"><h1>Cannot find specified champion.</h1></div>');
+  $("td.<%= @half_num %> non.champ-info").html('<div class="jumbotron"><h1 class="invalid">Cannot find specified champion.</h1></div>');
   $("td.<%= @half_num %>.passive").html("");
   $("td.<%= @half_num %>.q").html("");
   $("td.<%= @half_num %>.w").html("");
