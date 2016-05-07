@@ -9,7 +9,7 @@ champions = response.parsed_response
 
 vars_hash = Hash.new
 
-# Get the spell resource types of each champion.
+# Get the all resource types of champion abilities, e.g. armor, attackdamage.
 # Volume of calculations = #champions x #spells x #avg_vars_per_spell
 champions['data'].each do |champ, info|   
   champ_name_id = info['id'] 

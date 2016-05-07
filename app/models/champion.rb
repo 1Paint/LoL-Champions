@@ -74,6 +74,10 @@ class Champion < ActiveRecord::Base
     passive_img_name = data['data'][champ_name_id]['passive']['image']['full']
     @passive_img_url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/img/passive/#{passive_img_name}"
     @passive_description = data['data'][champ_name_id]['passive']['description']
+    
+    if @passive_description.nil?
+      @passive_description = "None"
+    end
   end
   
   # Retrieve champion stats such as HP, attack, defense, etc.
@@ -277,13 +281,18 @@ class Champion < ActiveRecord::Base
     resource = @data['data'][@champ_name_id]['spells'][num]['resource']
     cost_type = @data['data'][@champ_name_id]['spells'][num]['costType']
     
-    if !resource.include? "{{"
-      @spell_cost[button] = cost+" "+cost_type
-    end
     # Substitute spell cost and resource values into spell descriptions,
     # replacing all "{{ eX }}" and similar.
     @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
     @spell_cost[button] = @spell_cost[button].gsub("{{ cost }}", cost)
+    
+    if @current_version[0] == "0"
+      if cost == "0"
+        @spell_cost[button] = cost_type
+      else
+        @spell_cost[button] = cost+" "+cost_type
+      end
+    end
   end
   
   # Manually fix bugs & typos in Riot's API (wrong/redundant/unclear spell
