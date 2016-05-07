@@ -26,12 +26,16 @@ Desktop & Mobile/Tablet Previews
 
 Possible Future Updates
 -------
+### Application
+* Toggle side-by-side comparisons between champions of different versions, e.g. 6.9.1 Zyra vs 6.8.1 Zyra.
 * Enable a way to filter champions by their secondary roles.
-* The homepage currently renders every champion twice&mdash;once for the 'All' tab and once for the tab corresponding to their primary role. Use jQuery to render and filter the champions dynamically.
 * Create an item/runes/masteries database.
 * Create a feature to theory-craft by allowing users to add items/runes/masteries and see corresponding changes to champion stats abilities.
+
+### Code
+* Check game version only during index/missing data pages.
 * Add a more robust set of tests and champion attribute validations.
-* Display additional champion details such as playrates, winrates, IP and RP costs, available skins, etc.
+* The homepage currently renders every champion twice&mdash;once for the 'All' tab and once for the tab corresponding to their primary role. Use jQuery to render and filter the champions dynamically.
 
 Shoutouts
 -------
