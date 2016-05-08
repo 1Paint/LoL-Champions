@@ -24,6 +24,8 @@ Desktop & Mobile/Tablet Previews
 <img src="http://i.imgur.com/gIRZvX1.png" width="600">&nbsp;<img src="http://i.imgur.com/CNhLb5G.png" width="207">
 ### Champion Index with Sortable Stats
 <img src="http://i.imgur.com/i76oDoL.png" width="600">&nbsp;<img src="http://i.imgur.com/FWX6zJx.png" width="207">
+### Comparisons Page - Stats (Lucian 6.9.1 vs Jhin 6.9.1)
+<img src="http://i.imgur.com/X4NYkSI.png" width="600">
 ### Comparisons Page - Stats (Gragas 6.9.1 vs Gragas 3.8.5)
 <img src="http://i.imgur.com/sVfVjOP.png" width="600">
 ### Comparisons Page - Abilities (Gragas 6.9.1 vs Gragas 3.8.5)
