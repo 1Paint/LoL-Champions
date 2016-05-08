@@ -38,9 +38,7 @@ Possible Future Updates
 * Create a feature to theory-craft by allowing users to add items/runes/masteries and see corresponding changes to champion stats abilities.
 
 ### Code
-* Check game version only during index/missing data pages.
 * Add a more robust set of tests and champion attribute validations.
-* The homepage currently renders every champion twice&mdash;once for the 'All' tab and once for the tab corresponding to their primary role. Use jQuery to render and filter the champions dynamically.
 
 Shoutouts
 -------
