@@ -9,9 +9,10 @@ Features
 -------
 * Dynamic retrieval of champions and their stats from Riot Game's latest API.
 * Homepage of champions filterable by role.
+* A 'Compare' page allowing users to view champions between different game versions.
 * An index page of champions filterable by role and a table of sortable stats&mdash;from general stats to level 1 and level 18 stats.
-* Responsive and aesthetic layouts for desktop and mobile views.
 * Data on number of missing/misplaced API data for all champions' abilities.
+* Responsive and aesthetic layouts for desktop and mobile views.
 
 Desktop & Mobile/Tablet Previews
 -------
@@ -23,11 +24,15 @@ Desktop & Mobile/Tablet Previews
 <img src="http://i.imgur.com/gIRZvX1.png" width="600">&nbsp;<img src="http://i.imgur.com/CNhLb5G.png" width="207">
 ### Champion Index with Sortable Stats
 <img src="http://i.imgur.com/i76oDoL.png" width="600">&nbsp;<img src="http://i.imgur.com/FWX6zJx.png" width="207">
+### Champion Comparisons Page - Stats
+<img src="http://i.imgur.com/sVfVjOP.png" width="600">
+### Champion Comparisons Page - Abilities
+<img src="http://i.imgur.com/eRCofu3.png" width="600">
 
 Possible Future Updates
 -------
 ### Application
-* Toggle side-by-side comparisons between champions of different versions, e.g. 6.9.1 Zyra vs 6.8.1 Zyra.
+* Analytics of stats' and abilities' values.
 * Enable a way to filter champions by their secondary roles.
 * Create an item/runes/masteries database.
 * Create a feature to theory-craft by allowing users to add items/runes/masteries and see corresponding changes to champion stats abilities.
