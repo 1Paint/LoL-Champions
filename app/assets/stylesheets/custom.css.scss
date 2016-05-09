@@ -430,6 +430,9 @@ table.champs-table-general, table.champs-table-detailed {
   }
   th {
     text-align: center;
+    &:hover {
+      cursor: pointer;
+    }
   }
   a.name {
     color: black;
