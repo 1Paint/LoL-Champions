@@ -347,7 +347,7 @@ class Champion < ActiveRecord::Base
     # of twice the (base + bonus) damage.
     elsif value_type == "@special.dariusr3"  # 1
       # "100/200/300 (+0.75 bonus AD)" x2
-      @spell_values["{{ #{key} }}"] = '200/400/600 (+1.5 bonus AD)'
+      @spell_values["{{ #{key} }}"] = 'Twice the normal damage.'
 
     #---------------------------------------#
     #               Jax Bug-fix             #
