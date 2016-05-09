@@ -7,7 +7,7 @@ Currently hosted at [https://sleepy-cliffs-16895.herokuapp.com/](https://sleepy-
 
 Features
 -------
-* Dynamic retrieval of champions and their stats from Riot Game's latest API.
+* Dynamic retrieval, processing, and formatting of champions and their stats from Riot Game's latest API.
 * Homepage of champions filterable by role.
 * A 'Compare' page allowing users to view champions between different game versions.
 * An index page of champions filterable by role and a table of sortable stats&mdash;from general stats to level 1 and level 18 stats.
