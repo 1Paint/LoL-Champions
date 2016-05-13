@@ -189,7 +189,7 @@ class Champion < ActiveRecord::Base
   def input_spell_values(button, num)
     # Storage of spell values. Default "**Missing..." value for non-existing
     # keys.
-    @spell_values = Hash.new{|_,k| "#{k} **Missing/Misplaced API Data**"}
+    @spell_values = Hash.new{|_,k| "**Missing/Misplaced API Data** #{k}"}
     
     # Array of base values (e.g. effectBurn = [null, "200", "10/20/30"]).
     # effectBurn[X] (a string such as "1/2/3/4/5") replaces "{{ eX }}" in spell descriptions.
@@ -271,7 +271,7 @@ class Champion < ActiveRecord::Base
     
     # Substitute spell values into spell descriptions, replacing all "{{ eX }}"
     # and similar.
-    @spell_description[button] = @spell_description[button].gsub(/{{(.*?)}}/, @spell_values)
+    @spell_description[button] = @spell_description[button].gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
     
     # Find the costs and resources used for the spell.
     # e.g. cost = "10/20/30/40/50"
