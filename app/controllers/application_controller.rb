@@ -59,7 +59,7 @@ class ApplicationController < ActionController::Base
       champion.get_stats(@champ_name_id)
       champion.get_stats_ranges(@champ_name_id)
       # Get the champion's primary and secondary roles.
-      champion.get_roles(champion, @data)
+      champion.get_roles(@champ_name_id)
       
       # Update the champion's general stats and version #.
       champion.update(attack: champion.stat_summary[:attack],

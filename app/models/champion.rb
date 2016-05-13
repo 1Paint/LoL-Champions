@@ -184,8 +184,6 @@ class Champion < ActiveRecord::Base
   end
   
   # Replace all {{ xX }} strings in spell details with actual values.
-  # Should have this method only occur once per game version, i.e. store in
-  # spell descriptions in database.
   def input_spell_values(button, num)
     # Storage of spell values. Default "**Missing..." value for non-existing
     # keys.
@@ -271,7 +269,7 @@ class Champion < ActiveRecord::Base
     
     # Substitute spell values into spell descriptions, replacing all "{{ eX }}"
     # and similar.
-    @spell_description[button] = @spell_description[button].gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
+    @spell_description[button] = @spell_description[button].gsub(/{{(.*?)}}/, @spell_values)
     
     # Find the costs and resources used for the spell.
     # e.g. cost = "10/20/30/40/50"
@@ -283,8 +281,9 @@ class Champion < ActiveRecord::Base
     
     # Substitute spell cost and resource values into spell descriptions,
     # replacing all "{{ eX }}" and similar.
-    @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
+    @spell_cost[button] = resource
     @spell_cost[button] = @spell_cost[button].gsub("{{ cost }}", cost)
+    @spell_cost[button] = @spell_cost[button].gsub(/{{(.*?)}}/, @spell_values)
     
     # Versions 0.XXX do not have variables in resource text.
     if @current_version[0] == "0"
@@ -408,20 +407,12 @@ class Champion < ActiveRecord::Base
       # Get spell name, image, description.
       get_spell(button, num)
        
-      # Spell resource.
-      resource = @data['data'][@champ_name_id]['spells'][num]['resource']
-      @spell_cost[button] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
-      
       # Get number of missing values.
       num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
       num_missing_data += @spell_cost[button].scan("**Missing/Misplaced API Data**").count
       
       # For champions with secondary spells.
       if !@data['data'][@champ_name_id]['spells'][num+4].nil?
-        # Spell resource.
-        resource = @data['data'][@champ_name_id]['spells'][num+4]['resource']
-        @spell_cost["#{button}2".to_sym] = resource.gsub(/{{(\s[eaf]\d*\s)}}/, @spell_values)
-        
         # Get number of missing values for secondary abilities.
         num_missing_data += @spell_description["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
         num_missing_data += @spell_cost["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
@@ -436,9 +427,9 @@ class Champion < ActiveRecord::Base
   end
   
   # Find and the champion's primary and secondary roles.
-  def get_roles(champion,  data)
-    @primary_role = data['data'][champ_name_id]['tags'][0]
-    @secondary_role = data['data'][champ_name_id]['tags'][1]
+  def get_roles(champ_name_id)
+    @primary_role = @data['data'][champ_name_id]['tags'][0]
+    @secondary_role = @data['data'][champ_name_id]['tags'][1]
   end
 end
 
