@@ -4,21 +4,22 @@
   For example, there are 2 sets of missing values for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.</p><br><br>
 
 <% Champion.order(:champ_name_id).each do |champ| %>
-  <% buttons = ['Q', 'W', 'E', 'R'] %>
-  <% missing_data = [champ[:missing_q],
-                     champ[:missing_w],
-                     champ[:missing_e],
-                     champ[:missing_r]] %>
-  <% if missing_data.count(nil) != 4 or champ[:bad_passive] == true %>
+  <% num_missing_data = [champ[:missing_data]['q']['num_missing'],
+                         champ[:missing_data]['w']['num_missing'],
+                         champ[:missing_data]['e']['num_missing'],
+                         champ[:missing_data]['r']['num_missing']] %>
+  <% if num_missing_data.count(nil) != 4 or champ[:bad_passive] == true %>
     <h3 class="missingdata"><a href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></h3>
     
     <% if champ[:bad_passive] == true %>
       <p class="missingdata"><%= "Passive description is missing." %></p>
     <% end %>
     
+    <% buttons = ['q', 'w', 'e', 'r'] %>
     <% for i in 0..3 %>
-      <% if missing_data[i] != nil %>
-        <p class="missingdata"><%= "#{buttons[i]} is missing #{missing_data[i]} set(s) of values." %></p>
+      <% if num_missing_data[i] != nil %>
+        <% vars = champ[:missing_data][buttons[i]]['missing_vars'].join(', ') %>
+        <p class="missingdata"><%= "#{buttons[i].upcase} is missing #{num_missing_data[i]} set(s) of values: #{vars}" %></p>
       <% end %>
     <% end %>
     <br>

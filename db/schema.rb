@@ -11,14 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501010255) do
+ActiveRecord::Schema.define(version: 20160519043954) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "champions", force: :cascade do |t|
     t.string   "champ_name_id"
     t.string   "champ_key"
     t.string   "name"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "attack"
     t.integer  "defense"
     t.integer  "magic"
@@ -46,13 +49,10 @@ ActiveRecord::Schema.define(version: 20160501010255) do
     t.string   "attackrangemax"
     t.string   "primary"
     t.string   "secondary"
-    t.string   "missing_q"
-    t.string   "missing_w"
-    t.string   "missing_e"
-    t.string   "missing_r"
     t.boolean  "bad_passive"
+    t.json     "missing_data",    default: {}, null: false
   end
 
-  add_index "champions", ["champ_name_id"], name: "index_champions_on_champ_name_id"
+  add_index "champions", ["champ_name_id"], name: "index_champions_on_champ_name_id", using: :btree
 
 end

@@ -5,7 +5,7 @@ class Champion < ActiveRecord::Base
                 :passive, :passive_img_url, :passive_description,
                 :spell_name, :spell_img_name, :spell_img_url, 
                 :spell_cooldown, :spell_cost, :spell_range, :spell_description,
-                :missing_data, :primary_role, :secondary_role
+                :missing_data_temp, :primary_role, :secondary_role
   
   def initialize_spells
     @spell_name = Hash.new
@@ -390,10 +390,11 @@ class Champion < ActiveRecord::Base
     
     initialize_spells
     
-    # Storage of missing data. Will end up looking like [2, nil, 1, nil].
+    # Storage of missing data. Will end up looking like:
+    # [[2, "e1", "f2"], nil, [1, "f4"], nil].
     # This indicates that for the champion in question, there are 2 missing
-    # values for Q, none for W, 1 for E, and none for R.
-    @missing_data = []
+    # values for Q (e1 and f2), none for W, 1 for E (f4), and none for R.
+    @missing_data_temp = []
 
     @buttons = { q: 0, w: 1, e: 2, r: 3 }
     
@@ -411,17 +412,44 @@ class Champion < ActiveRecord::Base
       num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
       num_missing_data += @spell_cost[button].scan("**Missing/Misplaced API Data**").count
       
+      # Missing variables stored as e.g. [["e1"], ["f3"], ["f1"]].
+      missing_vars_description = @spell_description[button].scan(/{{\s(.*?)\s}}/)
+      missing_vars_cost = @spell_cost[button].scan(/{{\s(.*?)\s}}/)
+      
       # For champions with secondary spells.
       if !@data['data'][@champ_name_id]['spells'][num+4].nil?
-        # Get number of missing values for secondary abilities.
         num_missing_data += @spell_description["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
         num_missing_data += @spell_cost["#{button}2".to_sym].scan("**Missing/Misplaced API Data**").count
+        
+        missing_vars_description_2 = @spell_description["#{button}2".to_sym].scan(/{{\s(.*?)\s}}/)
+        missing_vars_cost_2 = @spell_cost["#{button}2".to_sym].scan(/{{\s(.*?)\s}}/)
       end
         
       if num_missing_data != 0
-        @missing_data << num_missing_data
+        missing_data = [num_missing_data]
+        
+        # Add primary ability's missing data.
+        missing_vars_description.each do |var_in_array| # var_in_array is of the form ["eX"].
+          missing_data << var_in_array[0]
+        end
+        missing_vars_cost.each do |var_in_array|
+          missing_data << var_in_array[0] 
+        end
+        
+        # Add secondary ability's missing data if it exists.
+        if !missing_vars_description_2.nil? && !missing_vars_description_2.empty?
+          missing_vars_description_2.each do |var_in_array| # var_in_array is of the form ["eX"].
+            missing_data << var_in_array[0]
+          end
+        end
+        if !missing_vars_cost_2.nil? && !missing_vars_cost_2.empty?
+          missing_vars_cost_2.each do |var_in_array|
+            missing_data << var_in_array[0] 
+          end
+        end
+        @missing_data_temp << missing_data
       else
-        @missing_data << nil
+        @missing_data_temp << nil
       end
     end
   end

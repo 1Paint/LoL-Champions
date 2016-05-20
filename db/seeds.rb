@@ -1,4 +1,4 @@
-url = "http://ddragon.leagueoflegends.com/cdn/6.1.1/data/en_US/champion.json"
+url = "http://ddragon.leagueoflegends.com/cdn/6.9.1/data/en_US/champion.json"
 response = HTTParty.get(url)
 data = response.parsed_response
 

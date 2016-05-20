@@ -23,8 +23,8 @@ class ApplicationController < ActionController::Base
   
   # Check that we have the current Leauge of Legends API version.
   def check_version
-    set_current_version # @current_version usable.
-
+    set_current_version # make @current_version usable.
+    @current_version = '6.9.1'
     # If the version has changed, update all champions and their stats.
     if Champion.first.version != @current_version
       update_version
@@ -78,13 +78,24 @@ class ApplicationController < ActionController::Base
                         "#{stat}max".to_sym => values[:max])
       end
       
-      # Find and update number of missing data for champion abilities.
+      # Find and update missing data for champion's abilities.
       champion.get_missing_data(@current_version, @champ_name_id)
-      champion.update(missing_q: champion.missing_data[0],
-                      missing_w: champion.missing_data[1],
-                      missing_e: champion.missing_data[2],
-                      missing_r: champion.missing_data[3])
-                      
+      missing_data_json = {}
+      # missing_data_temp has the form [[2, "e1", "f2"], nil, [1, "f4"], nil].
+      missing_data_temp = champion.missing_data_temp
+      
+      buttons = { q: 0, w: 1, e: 2, r: 3 }
+      buttons.each do |button, num|
+        missing_data_json[button] = {num_missing: nil, missing_vars: []}
+        if !missing_data_temp[num].nil?
+          missing_data_json[button][:num_missing] = missing_data_temp[num][0]
+          missing_data_temp[num][1..-1].each do |variable|
+            missing_data_json[button][:missing_vars] << variable
+          end
+        end
+      end
+      champion.update(missing_data: missing_data_json)
+      
       # Find if the champion has a bad passive description.
       url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"
       response = HTTParty.get(url)
