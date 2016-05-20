@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   # Check that we have the current Leauge of Legends API version.
   def check_version
     set_current_version # make @current_version usable.
-    @current_version = '6.9.1'
+    @current_version = '6.8.1'
     # If the version has changed, update all champions and their stats.
     if Champion.first.version != @current_version
       update_version
