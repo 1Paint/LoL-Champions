@@ -73,6 +73,7 @@ class Champion < ActiveRecord::Base
     @passive = data['data'][champ_name_id]['passive']['name']
     passive_img_name = data['data'][champ_name_id]['passive']['image']['full']
     @passive_img_url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/img/passive/#{passive_img_name}"
+    puts @passive_img_url
     @passive_description = data['data'][champ_name_id]['passive']['description']
     
     if @passive_description.nil?

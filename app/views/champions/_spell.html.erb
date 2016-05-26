@@ -1,7 +1,7 @@
 <div class="jumbotron spell spell-<%= "#{@spell_button}" %> <%= "#{@champion.champ_name_id}" %>">
   <div class="spell-top">
     <div class="spell-img">
-      <img src=<%= @champion.spell_img_url[@spell_button.to_sym] %> />
+      <img src=<%= URI.escape(@champion.spell_img_url[@spell_button.to_sym]) %> />
     </div>
     <div class="spell-dynamics">
       <h2 class="spell-name"><%= @champion.spell_name[@spell_button.to_sym].html_safe %></h2>
@@ -21,7 +21,7 @@
   <% if !@champion.spell_img_url["#{@spell_button}2".to_sym].nil? %>
     <div class="spell-top secondary-spell" >
       <div class="spell-img">
-        <img src=<%= @champion.spell_img_url["#{@spell_button}2".to_sym] %> />
+        <img src=<%= URI.escape(@champion.spell_img_url["#{@spell_button}2".to_sym]) %> />
       </div>
       <div class="spell-dynamics">
         <h2 class="spell-name"><%= @champion.spell_name["#{@spell_button}2".to_sym].html_safe %></h2>

@@ -1,7 +1,7 @@
 <div class="jumbotron passive">
   <div class="passive-top">
     <div class="passive-img">
-      <img class="passive-img" src=<%= @champion.passive_img_url %> alt=<%= @champion.passive %> />
+      <img class="passive-img" src=<%= URI.escape(@champion.passive_img_url) %> alt=<%= @champion.passive %> />
     </div>
     <div class="passive-dynamics">
       <h2 class="passive-name"><%= @champion.passive %></h2>

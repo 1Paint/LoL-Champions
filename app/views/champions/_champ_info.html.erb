@@ -7,7 +7,7 @@
     
     <div class="champ-details">
       <div class="champ-img">
-        <img class="champ-img" src=<%= @champion.champ_img_url %> alt=<%= @champion.champ_name %> />
+        <img class="champ-img" src=<%= URI.escape(@champion.champ_img_url) %> alt=<%= @champion.champ_name %> />
       </div>
       
       <!-- Attack, Defense, Magic, Difficulty ratings out of 10 -->
