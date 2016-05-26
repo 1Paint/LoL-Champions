@@ -659,6 +659,9 @@ h3.missingdata {
 }
 
 p.missingdata {
+  &:hover {
+    cursor: pointer;
+  }
   font-size: 16px;
   color: white;
   margin: 0px;

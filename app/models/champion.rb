@@ -61,10 +61,10 @@ class Champion < ActiveRecord::Base
     get_passive_info(@data, champ_name_id, current_version)
     
     # Retrieve spells info. Parameters: (Keys Q,W,E,R corresponding to 0,1,2,3) 
-    get_spell(:q, 0)
-    get_spell(:w, 1)
-    get_spell(:e, 2)
-    get_spell(:r, 3)
+    get_spell(champ_name_id, :q, 0)
+    get_spell(champ_name_id, :w, 1)
+    get_spell(champ_name_id, :e, 2)
+    get_spell(champ_name_id, :r, 3)
   end
   
   # Get champion passive ability information.
@@ -164,20 +164,20 @@ class Champion < ActiveRecord::Base
   end
   
   # Retrieve spell name, image, and description.
-  def get_spell(button, num)
-    @spell_name[button] = @data['data'][@champ_name_id]['spells'][num]['name']
-    @spell_img_name[button] = @data['data'][@champ_name_id]['spells'][num]['id']
+  def get_spell(champ_name_id, button, num)
+    @spell_name[button] = @data['data'][champ_name_id]['spells'][num]['name']
+    @spell_img_name[button] = @data['data'][champ_name_id]['spells'][num]['id']
     @spell_img_url[button] = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/spell/#{@spell_img_name[button]}.png"
-    @spell_range[button] = @data['data'][@champ_name_id]['spells'][num]['rangeBurn']
+    @spell_range[button] = @data['data'][champ_name_id]['spells'][num]['rangeBurn']
     
     input_spell_values(button, num)
     
     # If the spell has two forms, get the other form (e.g. Elise and Nidalee).
-    if !@data['data'][@champ_name_id]['spells'][num+4].nil?
-      @spell_name["#{button}2".to_sym] = @data['data'][@champ_name_id]['spells'][num+4]['name']
-      @spell_img_name["#{button}2".to_sym] = @data['data'][@champ_name_id]['spells'][num+4]['id']
+    if !@data['data'][champ_name_id]['spells'][num+4].nil?
+      @spell_name["#{button}2".to_sym] = @data['data'][champ_name_id]['spells'][num+4]['name']
+      @spell_img_name["#{button}2".to_sym] = @data['data'][champ_name_id]['spells'][num+4]['id']
       @spell_img_url["#{button}2".to_sym] = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/img/spell/#{@spell_img_name["#{button}2".to_sym]}.png"
-      @spell_range["#{button}2".to_sym] = @data['data'][@champ_name_id]['spells'][num+4]['rangeBurn']
+      @spell_range["#{button}2".to_sym] = @data['data'][champ_name_id]['spells'][num+4]['rangeBurn']
       
       input_spell_values("#{button}2".to_sym, num+4)
     end

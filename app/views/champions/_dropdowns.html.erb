@@ -58,7 +58,7 @@
       
       $("div.btn-champs."+half_num+" p.champ_id").html(champ_name_id);
       
-      var version = $("div.btn-versions."+half_num+" .btn").text()
+      var version = $("div.btn-versions."+half_num+" .btn").text();
       version = version.replace(/\s+/g, ' ').trim();
       
       $.ajax({
@@ -82,7 +82,7 @@
         var half_num = "half2";
       }
       
-      var champ_name_id = $("div.btn-champs."+half_num+" p.champ_id").text()
+      var champ_name_id = $("div.btn-champs."+half_num+" p.champ_id").text();
       champ_name_id = champ_name_id.replace(/\s+/g, ' ').trim();
       
       $.ajax({

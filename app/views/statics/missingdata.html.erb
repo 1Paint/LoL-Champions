@@ -1,7 +1,8 @@
 <% provide(:title, "Missing Data") %>
 
 <p class="note">A missing set of values is a set of missing information such as base damages or scaling numbers.<br>
-  For example, there are 2 sets of missing values for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.</p><br><br>
+  For example, there are 2 sets of missing values for "deals {{ eX }} + {{ fX }} damage" where eX and fX are missing.<br><br>
+  Click on a missing data line to view the corresponding ability. Click again to collapse it.</p><br>
 
 <% Champion.order(:champ_name_id).each do |champ| %>
   <% num_missing_data = [champ[:missing_data]['q']['num_missing'],
@@ -19,10 +20,44 @@
     <% for i in 0..3 %>
       <% if num_missing_data[i] != nil %>
         <% vars = champ[:missing_data][buttons[i]]['missing_vars'].join(', ') %>
-        <p class="missingdata"><%= "#{buttons[i].upcase} is missing #{num_missing_data[i]} set(s) of values: #{vars}" %></p>
+        <p class="missingdata skill <%= champ[:champ_name_id] %> <%= buttons[i] %>"><%= "#{buttons[i].upcase} is missing #{num_missing_data[i]} set(s) of values: #{vars}" %></p>
+        <p class="button-letter" hidden><%= buttons[i] %></p>
+        <p class="button-num" hidden><%= i %></p>
+        <p class="champ-name-id" hidden><%= champ.champ_name_id %></p>
       <% end %>
     <% end %>
     <br>
-    
   <% end %>
 <% end %>
+
+<script>
+  $.ajaxSetup({'cache': true});
+  
+  $('p.missingdata.skill').click(function(){
+    var button = $(this).nextAll('p.button-letter').first().text();
+    var button_num = $(this).nextAll('p.button-num').first().text();
+    var champ_name_id = $(this).nextAll('p.champ-name-id').first().text();
+    var version = "<%= Champion.first[:version] %>"
+    
+    var $spell_image = $(this).find("div."+champ_name_id);
+    if ($spell_image.length) {
+      if ($spell_image.hasClass("slidup")) {
+        $spell_image.slideDown();
+        $spell_image.removeClass("slidup");
+      } else {
+        $spell_image.slideUp();
+        $spell_image.addClass("slidup");
+      }
+    } else {
+      console.log("clicked");
+      $.ajax({
+         url: "/singlespell",
+         data: { button: button,
+                 button_num: button_num,
+                 champ_name_id: champ_name_id,
+                 version: version },
+         dataType: "script"
+      });
+    }
+  });
+</script>

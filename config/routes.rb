@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get 'missingdata' => 'statics#missingdata'
   get 'items' => 'items#index'
   get 'compare' => 'champions#compare'
+  get 'singlespell' => 'statics#singlespell'
   resources :champions, only: [:index, :show]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

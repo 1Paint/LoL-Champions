@@ -1,0 +1,3 @@
+var $div = $("<%= escape_javascript(render "champions/spell") %>").hide();
+$div.appendTo("p.<%= @champ_name_id %>.<%= @button %>").slideDown();
+

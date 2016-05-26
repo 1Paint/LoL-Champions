@@ -31,4 +31,22 @@ class StaticsController < ApplicationController
   def missingdata
     check_version # From applications controller.
   end
+  
+  def singlespell
+    @button = params[:button]
+    @button_num = params[:button_num]
+    @version = params[:version]
+    @champ_name_id = params[:champ_name_id]
+    
+    @champion = Champion.find_by(champ_name_id: @champ_name_id)
+    @champion.get_data_set(@champ_name_id, @version)
+    @champion.initialize_spells
+    @champion.get_spell(@champ_name_id, @button.to_sym, @button_num.to_i)
+    @spell_button = @button # to render partial champions/spell
+    
+    respond_to do |format|
+      format.html
+      format.js { render 'singlespell' }
+    end
+  end
 end
