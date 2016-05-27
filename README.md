@@ -30,6 +30,8 @@ Desktop & Mobile/Tablet Previews
 <img src="http://i.imgur.com/sVfVjOP.png" width="600">
 ### Compare - Abilities (Gragas 6.9.1 vs Gragas 3.8.5)
 <img src="http://i.imgur.com/eRCofu3.png" width="600">
+### Missing Data List and Visualization
+<img src="http://i.imgur.com/2jlxU0R.png" width="600">
 
 Possible Future Updates
 -------
