@@ -1,5 +1,7 @@
 <div id="unused" class="tab-pane fade">
-  <p class="note">These are variables that are available but never used in their corresponding abilities.</p>
+  <p class="note">These are variables that are available but never used in their corresponding abilities.<br>
+    Variables of the form "eX" (such as e1, e2, e3) are found in an ability's "effectBurn" field.<br>
+    All other variables are found in an ability's "vars" field.</p>
   
   <% buttons = ['q', 'w', 'e', 'r'] %>
   <% Champion.order(:champ_name_id).each do |champ| %>
