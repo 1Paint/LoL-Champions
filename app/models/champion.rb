@@ -262,16 +262,6 @@ class Champion < ActiveRecord::Base
       end
     end
     
-    @spell_cooldown[button] = @data['data'][@champ_name_id]['spells'][num]['cooldownBurn']
-    
-    # Description for spell, which includes base damage numbers and damage
-    # scaling (e.g. +60% bonus AD).
-    @spell_description[button] = @data['data'][@champ_name_id]['spells'][num]['tooltip']
-    
-    # Substitute spell values into spell descriptions, replacing all "{{ eX }}"
-    # and similar.
-    @spell_description[button] = @spell_description[button].gsub(/{{(.*?)}}/, @spell_values)
-    
     # Find the costs and resources used for the spell.
     # e.g. cost = "10/20/30/40/50"
     # e.g. resource = "{{ cost }} Mana", "{{ e2 }} Focus"
@@ -280,11 +270,22 @@ class Champion < ActiveRecord::Base
     resource = @data['data'][@champ_name_id]['spells'][num]['resource']
     cost_type = @data['data'][@champ_name_id]['spells'][num]['costType']
     
-    # Substitute spell cost and resource values into spell descriptions,
+    # Substitute spell cost and resource values into spell costs,
     # replacing all "{{ eX }}" and similar.
     @spell_cost[button] = resource
     @spell_cost[button] = @spell_cost[button].gsub("{{ cost }}", cost)
     @spell_cost[button] = @spell_cost[button].gsub(/{{(.*?)}}/, @spell_values)
+    
+    @spell_cooldown[button] = @data['data'][@champ_name_id]['spells'][num]['cooldownBurn']
+    
+    # Description for spell, which includes base damage numbers and damage
+    # scaling (e.g. +60% bonus AD).
+    @spell_description[button] = @data['data'][@champ_name_id]['spells'][num]['tooltip']
+    
+    # Substitute spell values into spell descriptions, replacing all "{{ eX }}"
+    # and similar.
+    @spell_description[button] = @spell_description[button].gsub("{{ cost }}", cost)
+    @spell_description[button] = @spell_description[button].gsub(/{{(.*?)}}/, @spell_values)
     
     # Versions 0.XXX do not have variables in resource text.
     if @current_version[0] == "0"
@@ -455,10 +456,12 @@ class Champion < ActiveRecord::Base
     end
   end
 
+  # Retrieve all unused variables in a champion's abilities.
   def get_unused_vars(current_version, champ_name_id)
     @unused_vars_temp = {q: {}, w: {}, e: {}, r: {}}
     buttons = { q: 0, w: 1, e: 2, r: 3 }
     spell_description = {}
+    resource_cost = {}
     vars_requested = {}
     vars_available = {}
     
@@ -469,12 +472,19 @@ class Champion < ActiveRecord::Base
     
     buttons.each do |button, num|
       spell_description[button] = data['data'][champ_name_id]['spells'][num]['tooltip']
+      resource_cost[button] = data['data'][champ_name_id]['spells'][num]['resource']
       vars_requested[button] = {}
+      vars_available[button] = {}
+      
+      # Obtain all variables present in spell and cost descriptions.
       spell_description[button].scan(/{{\s(.*?)\s}}/).each do |var|
         vars_requested[button][var[0].to_sym] = true
       end
-      vars_available[button] = {}
+      resource_cost[button].scan(/{{\s(.*?)\s}}/).each do |var|
+        vars_requested[button][var[0].to_sym] = true
+      end
       
+      # Obtain all variables provided/available.
       e_vars = data['data'][champ_name_id]['spells'][num]['effectBurn']
       i = 1
       e_vars[1..-1].each do |values|
@@ -493,6 +503,7 @@ class Champion < ActiveRecord::Base
         vars_available[button][index['key'].to_sym] = value
       end
       
+      # Variables Available - Variables Requested = Unused Variables
       vars_available[button].each do |var, value|
         if !vars_requested[button].key?(var)
           @unused_vars_temp[button][var.to_sym] = value
