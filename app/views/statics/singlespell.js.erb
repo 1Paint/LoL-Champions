@@ -1,3 +1,15 @@
-var $div = $("<%= escape_javascript(render "champions/spell") %>").hide();
-$div.appendTo("p.<%= @champ_name_id %>.<%= @button %>").slideDown();
+var $divspell = $("<%= escape_javascript(render "champions/spell") %>").hide();
+$divspell.css("margin","0");
+var $unused_vars = $('<div class="<%= @champ_name_id %>"><p class="missingdata">Unused Variables:</p></div>').hide();
+
+<% unused_vars = @champion[:unused_vars][@button] %>
+<% unused_vars.each do |var, value| %>
+    var $var_value = $('<p class="missingdata"><%= "#{var}: #{value}" %></p>');
+    $var_value.appendTo($unused_vars);
+<% end %>
+$('<br>').appendTo($unused_vars);
+
+
+$divspell.appendTo("p.<%= @champ_name_id %>.<%= @button %>").slideDown();
+$unused_vars.appendTo("p.<%= @champ_name_id %>.<%= @button %>").slideDown();
 

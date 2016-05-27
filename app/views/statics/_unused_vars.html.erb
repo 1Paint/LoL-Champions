@@ -1,0 +1,30 @@
+<div id="unused" class="tab-pane fade">
+  <p class="note">These are variables that are available but never used in their corresponding abilities.</p>
+  
+  <% buttons = ['q', 'w', 'e', 'r'] %>
+  <% Champion.order(:champ_name_id).each do |champ| %>
+    <% clean = true %>
+    <% buttons.each do |button| %>
+      <% if !champ[:unused_vars][button].empty? %>
+        <% clean = false %>
+        <% break %>
+      <% end %>
+    <% end %>
+    
+    <% if clean == false %>
+      <h3 class="missingdata"><a href=<%= "/champions/#{champ[:champ_name_id]}" %>><%= champ[:name] %></a></h3>
+      
+      <% buttons.each do |button| %>
+        <% unused_vars = champ[:unused_vars][button] %>
+        <% if !unused_vars.empty? %>
+          <p class="unused"><%= "#{button.upcase}: #{unused_vars.length} unused variable(s)" %></p>
+          <% unused_vars.each do |var, value| %>
+            <p class="unused vars"><%= "#{var}: #{value}" %></p>
+          <% end %>
+        <% end %>
+      <% end %>
+      <br>
+    <% end %>
+    
+  <% end %>
+</div>

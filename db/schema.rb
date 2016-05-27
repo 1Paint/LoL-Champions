@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160519043954) do
+ActiveRecord::Schema.define(version: 20160526230247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160519043954) do
     t.string   "secondary"
     t.boolean  "bad_passive"
     t.json     "missing_data",    default: {}, null: false
+    t.json     "unused_vars",     default: {}, null: false
   end
 
   add_index "champions", ["champ_name_id"], name: "index_champions_on_champ_name_id", using: :btree

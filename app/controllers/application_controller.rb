@@ -84,6 +84,7 @@ class ApplicationController < ActionController::Base
       # missing_data_temp has the form [[2, "e1", "f2"], nil, [1, "f4"], nil].
       missing_data_temp = champion.missing_data_temp
       
+      # Refactor this section into champion model.
       buttons = { q: 0, w: 1, e: 2, r: 3 }
       buttons.each do |button, num|
         missing_data_json[button] = {num_missing: nil, missing_vars: []}
@@ -95,6 +96,10 @@ class ApplicationController < ActionController::Base
         end
       end
       champion.update(missing_data: missing_data_json)
+      
+      # Find and store all abilities' unused variables.
+      champion.get_unused_vars(@current_version, @champ_name_id)
+      champion.update(unused_vars: champion.unused_vars_temp)
       
       # Find if the champion has a bad passive description.
       url = "http://ddragon.leagueoflegends.com/cdn/#{@current_version}/data/en_US/champion/#{@champ_name_id}.json"

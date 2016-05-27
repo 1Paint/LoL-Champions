@@ -658,13 +658,20 @@ h3.missingdata {
   margin: 0px;
 }
 
+p.missingdata, p.unused {
+  font-size: 16px;
+  color: white;
+  margin: 0px;
+}
+
 p.missingdata {
   &:hover {
     cursor: pointer;
   }
-  font-size: 16px;
-  color: white;
-  margin: 0px;
+}
+
+p.vars {
+  margin-left: 20px;
 }
 
 /*******************************************************/

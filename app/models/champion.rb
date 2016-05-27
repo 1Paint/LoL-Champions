@@ -5,7 +5,7 @@ class Champion < ActiveRecord::Base
                 :passive, :passive_img_url, :passive_description,
                 :spell_name, :spell_img_name, :spell_img_url, 
                 :spell_cooldown, :spell_cost, :spell_range, :spell_description,
-                :missing_data_temp, :primary_role, :secondary_role
+                :missing_data_temp, :unused_vars_temp, :primary_role, :secondary_role
   
   def initialize_spells
     @spell_name = Hash.new
@@ -407,7 +407,7 @@ class Champion < ActiveRecord::Base
     # Get missing data for each ability.
     @buttons.each do |button, num|
       # Get spell name, image, description.
-      get_spell(button, num)
+      get_spell(@champ_name_id, button, num)
        
       # Get number of missing values.
       num_missing_data = @spell_description[button].scan("**Missing/Misplaced API Data**").count
@@ -451,6 +451,52 @@ class Champion < ActiveRecord::Base
         @missing_data_temp << missing_data
       else
         @missing_data_temp << nil
+      end
+    end
+  end
+
+  def get_unused_vars(current_version, champ_name_id)
+    @unused_vars_temp = {q: {}, w: {}, e: {}, r: {}}
+    buttons = { q: 0, w: 1, e: 2, r: 3 }
+    spell_description = {}
+    vars_requested = {}
+    vars_available = {}
+    
+    # Get champion data.
+    url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/champion/#{champ_name_id}.json"
+    response = HTTParty.get(url)
+    data = response.parsed_response
+    
+    buttons.each do |button, num|
+      spell_description[button] = data['data'][champ_name_id]['spells'][num]['tooltip']
+      vars_requested[button] = {}
+      spell_description[button].scan(/{{\s(.*?)\s}}/).each do |var|
+        vars_requested[button][var[0].to_sym] = true
+      end
+      vars_available[button] = {}
+      
+      e_vars = data['data'][champ_name_id]['spells'][num]['effectBurn']
+      i = 1
+      e_vars[1..-1].each do |values|
+        if values == nil
+          values = "None"
+        end
+        vars_available[button]["e#{i}".to_sym] = values
+        i += 1
+      end
+      v_vars = data['data'][champ_name_id]['spells'][num]['vars']
+      v_vars.each do |index|
+        value = index['coeff']
+        if value == nil
+          value = "None"
+        end
+        vars_available[button][index['key'].to_sym] = value
+      end
+      
+      vars_available[button].each do |var, value|
+        if !vars_requested[button].key?(var)
+          @unused_vars_temp[button][var.to_sym] = value
+        end
       end
     end
   end
