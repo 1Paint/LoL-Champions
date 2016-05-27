@@ -11,7 +11,7 @@ Features
 * Homepage of champions filterable by role.
 * A 'Compare' page allowing users to view champions between different game versions.
 * An index page of champions filterable by role and a table of sortable stats&mdash;from general stats to level 1 and level 18 stats.
-* Data on number of missing/misplaced API data for all champions' abilities.
+* List and visualizations of missing/misplaced API data and unused data for all champions' abilities.
 * Responsive and aesthetic layouts for desktop and mobile views.
 
 Desktop & Mobile/Tablet Previews
