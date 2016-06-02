@@ -15,6 +15,17 @@ class Champion < ActiveRecord::Base
     @spell_cost = Hash.new
     @spell_range = Hash.new
     @spell_description = Hash.new
+    
+    @value_type_hash = {
+      spelldamage: "AP",
+      bonusattackdamage: "bonus AD",
+      attackdamage: "AD",
+      armor: "Armor",
+      bonushealth: "bonus HP",
+      health: "HP",
+      bonusarmor: "bonus Armor",
+      bonusspellblock: "bonus Magic Resist"
+    }
   end
   
   def initialize_stats
@@ -73,7 +84,6 @@ class Champion < ActiveRecord::Base
     @passive = data['data'][champ_name_id]['passive']['name']
     passive_img_name = data['data'][champ_name_id]['passive']['image']['full']
     @passive_img_url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/img/passive/#{passive_img_name}"
-    puts @passive_img_url
     @passive_description = data['data'][champ_name_id]['passive']['description']
     
     if @passive_description.nil?
@@ -216,47 +226,28 @@ class Champion < ActiveRecord::Base
       coeff = hash['coeff']      # 0.2           | [0.2, 0.4, 0.6]
       value_type = hash['link']  # "spelldamage" | "@dynamic.attackdamage"
       
+      if value_type == nil
+        value_type = "**Missing 'link'**"
+      else
+        # Sanitize value types beginning with "@".
+        fix_special_value_types(hash)
+      end
+      
       if coeff.is_a? Float
         coeff = [coeff]
       end
       coeff = coeff.join("/")  # [1, 2, 3] --> "1/2/3"
       
-      # Replace JSON value type names with proper English.
-      # All value types (spell resources) and their frequencies can be found by
-      # running 'lib/scripts/get_all_vars_types.rb'. The following conditionals
-      # check the most frequent normal value types first, followed by special
-      # value types. Frequencies shown to the right of conditionals.
-      if value_type == "spelldamage"  # 374
-        value_type = "AP"
-        
-      elsif value_type == "bonusattackdamage"  # 90
-        value_type = "bonus AD"
-        
-      elsif value_type == "attackdamage"  # 47
-        value_type = "AD"
-        
-      elsif value_type == "armor"  # 5
-        value_type = "Armor"
-        
-      elsif value_type == "bonushealth"  # 5
-        value_type = "bonus HP"
-        
-      elsif value_type == "health"  # 3
-        value_type = "HP"
-        
-      elsif value_type == "bonusarmor"  # 1
-        value_type = "bonus Armor"
-        
-      elsif value_type == "bonusspellblock"  # 1 
-        value_type = "bonus Magic Resist"
+      # Replace JSON value type names with proper English, e.g. 'spelldamage'
+      # is replaced with 'AP'. All value types and their frequencies can be
+      # found by running 'lib/scripts/get_all_vars_types.rb'.
+      if @value_type_hash.key?(value_type.to_sym)
+        value_type = @value_type_hash[value_type.to_sym]
       end
-      
-      # Sanitize value types beginning with "@".
-      fix_special_value_types(hash)
-      
+
       # If spell value doesn't already exist, input it into the spell_values
       # hash. Conditional needed because spell values already exist for bug 
-      # fixes. 
+      # fixes and we don't want to replace those spell values. 
       if @spell_values["{{ #{key} }}"][0..1] == "**"  # **Missing/Misplaced API Data** --- default value indicating nonexistence.
         @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
       end

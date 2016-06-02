@@ -21,7 +21,7 @@ class ChampionsController < ApplicationController
       get_champ(champ_name_id, @version) # from champions_helper.rb
     rescue NoMethodError
       respond_to do |format|
-        # Add format.html? Error won't be raised outside of 'Compare' page.
+        format.html
         format.js { render :action => "invalid" }
       end
     else
