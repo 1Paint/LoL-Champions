@@ -1,6 +1,6 @@
 require 'httparty'
 
-current_version = "6.9.1"
+current_version = "6.11.1"
 
 # Obtain all champions.
 url = "http://ddragon.leagueoflegends.com/cdn/#{current_version}/data/en_US/champion.json"
@@ -24,16 +24,18 @@ champions['data'].each do |champ, info|
     vars.each do |hash|
       spell_resource = hash['link']
       
-      if vars_hash[spell_resource.to_sym].nil?
-        vars_hash[spell_resource.to_sym] = {}
-        vars_hash[spell_resource.to_sym][:freq] = 1
-        vars_hash[spell_resource.to_sym][champ_name] = 1
-      else
-        vars_hash[spell_resource.to_sym][:freq] += 1
-        if vars_hash[spell_resource.to_sym][champ_name].nil?
+      if spell_resource
+        if vars_hash[spell_resource.to_sym].nil?
+          vars_hash[spell_resource.to_sym] = {}
+          vars_hash[spell_resource.to_sym][:freq] = 1
           vars_hash[spell_resource.to_sym][champ_name] = 1
         else
-          vars_hash[spell_resource.to_sym][champ_name] += 1
+          vars_hash[spell_resource.to_sym][:freq] += 1
+          if vars_hash[spell_resource.to_sym][champ_name].nil?
+            vars_hash[spell_resource.to_sym][champ_name] = 1
+          else
+            vars_hash[spell_resource.to_sym][champ_name] += 1
+          end
         end
       end
     

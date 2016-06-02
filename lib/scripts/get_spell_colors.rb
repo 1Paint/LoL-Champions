@@ -1,6 +1,6 @@
 # Get the colors used for each spell of each champion.
 
-current_version = "6.9.1"
+current_version = "6.11.1"
 
 require 'httparty'
 

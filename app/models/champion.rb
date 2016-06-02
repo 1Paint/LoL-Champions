@@ -26,6 +26,51 @@ class Champion < ActiveRecord::Base
       bonusarmor: "bonus Armor",
       bonusspellblock: "bonus Magic Resist"
     }
+    
+    @special_value_type_hash = {
+      "@text".to_sym => "",
+      "@cooldownchampion".to_sym => "",
+      "@dynamic.abilitypower".to_sym => "AP",    
+      "@dynamic.attackdamage".to_sym => "AD",
+      #---------------------------------------#
+      #             Braum Bug-fix             #
+      #---------------------------------------#
+      # Bug: Keys f3 and f4 for 'W' have coeffs of 0.
+      "@special.BraumWArmor".to_sym => "",
+      "@special.BraumWMR".to_sym => "",
+      #---------------------------------------#
+      #             Darius Bug-fix            #
+      #---------------------------------------#
+      # Bug: Maximum damage f3 for 'R' shows as an array of base damages
+      # instead of twice the (base + bonus) damage.
+      "@special.dariusr3".to_sym => "Twice the normal damage.",
+      #---------------------------------------#
+      #               Jax Bug-fix             #
+      #---------------------------------------#
+      # Bug: Extraneous & incorrect scaling values for increased armor and
+      # magic resist in 'R' description.
+      "@special.jaxrarmor".to_sym => "",
+      "@special.jaxrmr".to_sym => "",
+      #---------------------------------------#
+      #          Nautilus Bug-fix             #
+      #---------------------------------------#
+      # Bug: Redundant info in 'Q'. Displays "(0.5 @special.nautilusq)" after
+      # stating a 50% cooldown reduction when hitting terrain.
+      "@special.nautilusq".to_sym => "0.5",
+      #---------------------------------------#
+      #              Vi  Bug-fix              #
+      #---------------------------------------#
+      # Bug: Additional damage for 'W' shows up as "+35" instead of "+1% per 35
+      # bonus attack damage". Must reformat how this information is displayed
+      # because the '%' sign is static in the text, placed after the spell
+      # value: "[(Bonus Attack Damage)x(1/35)]".
+      "@special.viw".to_sym => "[(bonus AD)x(1/35)]",
+      #---------------------------------------#
+      #      Stacks (Nasus, Veigar, etc.)     #
+      #---------------------------------------#
+      # "@stacks" --> "Number of Stacks"
+      "@stacks".to_sym => "Number of Stacks"
+    }
   end
   
   def initialize_stats
@@ -221,16 +266,17 @@ class Champion < ActiveRecord::Base
     
     # Store aX and fX values with corresponding values.
     # e.g. a1: "12/24/36/48/60".
-    vars.each do |hash|          # static        | dynamic
-      key = hash['key']          # "aX"          | "aX"
-      coeff = hash['coeff']      # 0.2           | [0.2, 0.4, 0.6]
+    vars.each do |hash|                 # static        | dynamic
+      key = hash['key']                 # "aX"          | "aX"
+      coeff = hash['coeff']             # 0.2           | [0.2, 0.4, 0.6]
       value_type = hash['link']  # "spelldamage" | "@dynamic.attackdamage"
       
       if value_type == nil
-        value_type = "**Missing 'link'**"
+        value_type = "**Missing 'link' in vars**"
       else
+        value_type = value_type.to_sym
         # Sanitize value types beginning with "@".
-        fix_special_value_types(hash)
+        fix_special_value_types(hash, key, coeff, value_type)
       end
       
       if coeff.is_a? Float
@@ -241,8 +287,8 @@ class Champion < ActiveRecord::Base
       # Replace JSON value type names with proper English, e.g. 'spelldamage'
       # is replaced with 'AP'. All value types and their frequencies can be
       # found by running 'lib/scripts/get_all_vars_types.rb'.
-      if @value_type_hash.key?(value_type.to_sym)
-        value_type = @value_type_hash[value_type.to_sym]
+      if @value_type_hash.key?(value_type)
+        value_type = @value_type_hash[value_type]
       end
 
       # If spell value doesn't already exist, input it into the spell_values
@@ -290,89 +336,30 @@ class Champion < ActiveRecord::Base
   
   # Manually fix bugs & typos in Riot's API (wrong/redundant/unclear spell
   # values). All value types here begin with "@".
-  def fix_special_value_types(hash)
-    key = hash['key']
-    coeff = hash['coeff']
-    value_type = hash['link']
+  def fix_special_value_types(hash, key, coeff, value_type)
     
-    # Turn single digit into an array of length 1.
+    # Turn a single digit into an array of length 1 (because array is needed
+    # for joining.
     if coeff.is_a? Float
       coeff = [coeff]
     end
     coeff = coeff.join("/")  # [1, 2, 3] --> "1/2/3"
     
-    if value_type == "@text"  # 9
-      value_type = ""
-      @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
-    elsif value_type == "@cooldownchampion"  # 5
-      value_type = ""
-      @spell_values["{{ #{key} }}"] = "#{coeff} #{value_type}"
+    if @special_value_type_hash.key?(value_type)
+      # coeff is 0 or not needed.
+      @spell_values["{{ #{key} }}"] = @special_value_type_hash[value_type]
       
-    elsif value_type[0..7] == "@dynamic"
-      if value_type == "@dynamic.abilitypower"  # 4
-        value_type = "AP"
-      elsif value_type == "@dynamic.attackdamage"  # 2
-        value_type = "AD"  
+      # coeff needed.
+      if value_type == :@text || value_type == :@cooldownchampion
+        @spell_values["{{ #{key} }}"] = "#{coeff} #{@special_value_type_hash[value_type]}"
       end
       
-      #---------------------------------------#
-      #             Rengar Bug-fix            #
-      #---------------------------------------#
-      # Bug: coeff for 'Q' is not in an array.
-
-      # (+/-) indicating scaling direction.
+      # dyn is a + or -.
       dyn = hash['dyn']
-      # Text description lacks parentheses so must make separate string.
-      @spell_values["{{ #{key} }}"] = "(#{dyn}#{coeff} #{value_type})"
-      
-    #---------------------------------------#
-    #             Braum Bug-fix             #
-    #---------------------------------------#
-    # Bug: Keys f3 and f4 for 'W' have coeffs of 0.
-    elsif value_type == "@special.BraumWArmor" || value_type == "@special.BraumWMR"  # 2
-      @spell_values["{{ #{key} }}"] = ""
-
-    #---------------------------------------#
-    #             Darius Bug-fix            #
-    #---------------------------------------#
-    # Bug: Maximum damage f3 for 'R' shows as an array of base damages instead
-    # of twice the (base + bonus) damage.
-    elsif value_type == "@special.dariusr3"  # 1
-      # "100/200/300 (+0.75 bonus AD)" x2
-      @spell_values["{{ #{key} }}"] = 'Twice the normal damage.'
-
-    #---------------------------------------#
-    #               Jax Bug-fix             #
-    #---------------------------------------#
-    # Bug: Extraneous & incorrect scaling values for increased armor and magic
-    # resist in 'R' description.
-    elsif value_type == "@special.jaxrarmor" || value_type == "@special.jaxrmr"  # 2
-      @spell_values["{{ #{key} }}"] = ""
-    
-    #---------------------------------------#
-    #          Nautilus Bug-fix             #
-    #---------------------------------------#
-    # Bug: Redundant info in 'Q'. Displays "(0.5 @special.nautilusq)" after
-    # stating a 50% cooldown reduction when hitting terrain.
-    elsif value_type == "@special.nautilusq"
-      @spell_values["{{ #{key} }}"] = ""  # 1
-
-    #---------------------------------------#
-    #              Vi  Bug-fix              #
-    #---------------------------------------#
-    # Bug: Additional damage for 'W' shows up as "+35" instead of "+1% per 35
-    # bonus attack damage". Must reformat how this information is displayed
-    # because the '%' sign is static in the text, placed after the spell value:
-    # "[(Bonus Attack Damage)x(1/35)]".
-    elsif value_type == "@special.viw"  # 1
-      @spell_values["{{ #{key} }}"] = "[(bonus AD)x(1/35)]"
-    
-    #---------------------------------------#
-    #      Stacks (Nasus, Veigar, etc.)     #
-    #---------------------------------------#
-    # "@stacks" --> "Number of Stacks"
-    elsif value_type == "@stacks"  # 2
-      @spell_values["{{ #{key} }}"] = "Number of Stacks"
+      if dyn
+        # Text description lacks parentheses so must create string with ().
+        @spell_values["{{ #{key} }}"] = "(#{dyn}#{coeff} #{@special_value_type_hash[value_type]})"
+      end
     end
   end
   
@@ -509,67 +496,3 @@ class Champion < ActiveRecord::Base
     @secondary_role = @data['data'][champ_name_id]['tags'][1]
   end
 end
-
-####################################################
-#     Complicated code---inc speed/efficiency?     #
-####################################################
-# Replace JSON value type names with proper English.
-# All value types (spell resources) and their frequencies can be found by
-# running 'lib/scripts/get_all_vars_types.rb'. The following conditionals
-# check the most frequent normal value types first, followed by special
-# value types (dynamic-scaling abiltiies).
-
-# Only check enough letters of the value type name to distinguish from all
-# other value types. Should probably write a test for this.
-
-# if value_type[0] == "s"  # --------------- 374 spelldamage
-#   value_type = "Ability Power"
-# elsif value_type[10] == "k"  # ----------- 90 bonusattackdamage
-#   value_type = "Bonus Attack Damage"
-# elsif value_type[5] == "k"  # ------------ 47 attackdamage
-#   value_type = "Attack Damage"
-# elsif value_type[4] == "r"  # ------------ 5 armor
-#   value_type = "Armor"
-# elsif value_type[5] == "h"  # ------------ 5 bonushealth
-#   value_type = "Bonus Health"
-# elsif value_type[0] == "h"  # ------------ 3 health
-#   value_type = "Health"
-# elsif value_type[6] == "r"  # ------------ 1 bonusarmor
-#   value_type = "Bonus Armor"
-# elsif value_type[5] == "s"   # ----------- 1 bonusspellblock
-#   value_type = "Bonus Magic Resist"
-# end
-
-# if value_type[3] == "x"  # ---------------------- 9 @text
-#   value_type = ""
-# elsif value_type[1] == "c"  # ------------------- 5 @cooldownchampion
-#   value_type = ""
-# elsif value_type[1] == "d"  # dynamic
-#   if value_type[16] == "p"  # ------------------- 4 @dynamic.abilitypower
-#     value_type = "Ability Power"
-#   elsif value_type[14] == "k"  # ---------------- 2 @dynamic.attackdamage
-#     value_type = "Attack Damage"
-#   end
-  
-#   #---------------------------------------#
-#   #             Rengar Bug-fix            #
-#   #---------------------------------------#
-#   # Bug: coeff is not in an array.
-#   # Turn single digit into an array of length 1.
-#   if coeff.is_a? Float
-#     coeff = [coeff]
-#   end
-  
-#   # [1, 2, 3] --> "1/2/3"
-#   coeff = coeff.join("/")
-#   # (+/-) indicating scaling direction.
-#   dyn = hash['dyn']
-#   # Text description lacks parentheses so must make separate string.
-#   @spell_values["{{ #{key} }}"] = "(#{dyn}#{coeff} #{value_type})"
-  
-# #---------------------------------------#
-# #             Braum Bug-fix             #
-# #---------------------------------------#
-# # Bug: keys f3 and f4 have coeffs of 0.
-# elsif value_type[9] == "B" # -------------------- 1, 1 @special.Braum(Armor/MR)
-#   @spell_values["{{ #{key} }}"] = ""
