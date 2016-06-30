@@ -465,21 +465,27 @@ class Champion < ActiveRecord::Base
       # Obtain all variables provided/available.
       e_vars = data['data'][champ_name_id]['spells'][num]['effectBurn']
       i = 1
-      e_vars[1..-1].each do |values|
-        if values == nil
-          values = "None"
+      if !e_vars[1..-1].nil?
+        e_vars[1..-1].each do |values|
+          if values == nil
+            values = "None"
+          end
+          vars_available[button]["e#{i}".to_sym] = values
+          i += 1
         end
-        vars_available[button]["e#{i}".to_sym] = values
-        i += 1
       end
+      
       v_vars = data['data'][champ_name_id]['spells'][num]['vars']
-      v_vars.each do |index|
-        value = index['coeff']
-        if value == nil
-          value = "None"
+      if !v_vars.nil?
+        v_vars.each do |index|
+          value = index['coeff']
+          if value == nil
+            value = "None"
+          end
+          vars_available[button][index['key'].to_sym] = value
         end
-        vars_available[button][index['key'].to_sym] = value
       end
+      
       
       # Variables Available - Variables Requested = Unused Variables
       vars_available[button].each do |var, value|
